@@ -18,23 +18,52 @@ public class SendData {
 	}
 	
 	public synchronized void initCOM(){
+		if(this.ptrHandler.isInited()){
+			System.out.println("COM is already initialized");
+			return;
+		}
 		SendData.initCOM(ptrHandler);
-		//TODO only for test here
-		System.out.println(this.ptrHandler.pHCom);
-		System.out.println(this.ptrHandler.pWrOverland);
+		this.ptrHandler.setInited(true);
 	}
 	
 	public synchronized void sendData(byte[] buffer){
+		if(!this.ptrHandler.isInited()){
+			System.out.println("COM is already destroyed, please init it before send data");
+			return;
+		}
 		SendData.sendData(ptrHandler, buffer);
 	}
 	
-	public synchronized void formateData(Point3D p,Speed s,byte[] buf){
+	public synchronized void destroy(){
+		if(!this.ptrHandler.isInited()){
+			System.out.println("COM is already destroyed");
+			return;
+		}
+		SendData.destroy(ptrHandler);
+		this.ptrHandler.setInited(false);
+	}
+	
+	public void formateData(Point3D p,Speed s,byte[] buf){
+		if(buf==null || buf.length<32){
+			System.out.println("please init buf first");
+		}
 		SendData.formatData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), buf);
 	}
 	
 	private static class PtrData {
 		public long pHCom = 0;
 		public long pWrOverland = 0;
+		
+		private volatile boolean isInit = false;
+		public void setInited(boolean flag){
+			this.isInit = flag;
+		}
+		public boolean isInited(){
+			return this.isInit;
+		}
+		public String toString(){
+			return "PtrData object:"+this.pHCom+","+this.pWrOverland+","+this.isInit;
+		}
 	}
 	
 	static{

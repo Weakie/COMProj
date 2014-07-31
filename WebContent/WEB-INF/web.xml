@@ -9,16 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  <!-- 
   <servlet>
     <description></description>
-    <display-name>UploadServlet</display-name>
-    <servlet-name>UploadServlet</servlet-name>
-    <servlet-class>com.sissy.web.UploadServlet</servlet-class>
+    <display-name>DataDispatcherServlet</display-name>
+    <servlet-name>DataDispatcherServlet</servlet-name>
+    <servlet-class>com.weakie.server.servlet.DataDispatcherServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>UploadServlet</servlet-name>
-    <url-pattern>/UploadServlet</url-pattern>
+    <servlet-name>DataDispatcherServlet</servlet-name>
+    <url-pattern>/DataDispatcherServlet</url-pattern>
   </servlet-mapping>
-   -->
 </web-app>

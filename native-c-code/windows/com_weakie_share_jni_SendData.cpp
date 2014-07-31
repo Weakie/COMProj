@@ -1,7 +1,7 @@
-#include "com_weakie_jni_SendData.h"
+#include "com_weakie_share_jni_SendData.h"
 #include "SendData.h"
 
-JNIEXPORT jboolean JNICALL Java_com_weakie_jni_SendData_initCOM
+JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 (JNIEnv *env, jclass cls, jobject obj){
 	//get fieldId
 	jclass ptrCls = env->GetObjectClass(obj);
@@ -24,7 +24,7 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_jni_SendData_initCOM
 	return result;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_weakie_jni_SendData_sendData
+JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
 (JNIEnv *env, jclass cls, jobject obj, jbyteArray array){
 	//get fieldId
 	jclass ptrCls = env->GetObjectClass(obj);
@@ -47,12 +47,35 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_jni_SendData_sendData
 	}
 	//send data
 	bool result = SendData(*g_hCom,*g_wrOverland,buf,sizeof(buf));
-	
+
 	return result;
 }
+JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
+(JNIEnv *env, jclass cls, jobject obj){
+	//get fieldId
+	jclass ptrCls = env->GetObjectClass(obj);
+	jfieldID pHComFid = env->GetFieldID(ptrCls,"pHCom","J");
+	jfieldID pWrOverlandFid = env->GetFieldID(ptrCls,"pWrOverland","J");
+
+	//get field value
+	long long g_hComValue = env->GetLongField(obj,pHComFid);
+	long long g_wrOverlandValue = env->GetLongField(obj,pWrOverlandFid);
+
+	//convert long to ptr value
+	HANDLE* g_hCom = (HANDLE*) g_hComValue;
+	OVERLAPPED* g_wrOverland = (OVERLAPPED*) g_wrOverlandValue;
+
+	//TODO release handler
 
 
-JNIEXPORT void JNICALL Java_com_weakie_jni_SendData_formatData
+	//delete handler
+	delete g_wrOverland;
+	delete g_hCom;
+
+	return true;
+}
+
+JNIEXPORT void JNICALL Java_com_weakie_share_jni_SendData_formatData
 (JNIEnv * env, jclass cls, jint x, jint y, jint z, jint sx, jint sy, jint sz, jbyteArray buffer){
 	Speed speed(sx,sy,sz);
 	Point3i point(x,y,z);

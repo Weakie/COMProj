@@ -46,5 +46,7 @@ public class SendData {
 
 	private static native boolean sendData(PtrData dataHandler,byte[] buffer);
 	
+	private static native boolean destroy(PtrData dataHandler);
+	
 	private static native void formatData(int x,int y,int z,int sx,int sy,int sz,byte[] buffer);
 }

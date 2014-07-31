@@ -1,82 +1,35 @@
 package com.weakie.view;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.SWT;
-
-import swing2swt.layout.BorderLayout;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.custom.ViewForm;
-import org.eclipse.swt.widgets.Group;
-
-import java.awt.Font;
-import java.awt.Frame;
-
-import org.eclipse.swt.awt.SWT_AWT;
-
-import java.awt.Panel;
-
-import javax.swing.JRootPane;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.layout.FillLayout;
-
-import swing2swt.layout.FlowLayout;
-
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.layout.RowData;
-
-import swing2swt.layout.BoxLayout;
-
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-
-import javax.swing.JPanel;
-import javax.swing.border.TitledBorder;
-import javax.swing.border.LineBorder;
-
-import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.CoolBar;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.ExpandableComposite;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.ui.forms.events.ExpansionAdapter;
-import org.eclipse.ui.forms.events.IExpansionListener;
-import org.eclipse.ui.forms.events.ExpansionEvent;
-import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
+import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Spinner;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.events.ExpansionAdapter;
+import org.eclipse.ui.forms.events.ExpansionEvent;
+import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import swing2swt.layout.BorderLayout;
 
 import com.weakie.bean.Point3D;
 import com.weakie.bean.Speed;

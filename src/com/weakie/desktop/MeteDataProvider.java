@@ -1,4 +1,4 @@
-package com.weakie;
+package com.weakie.desktop;
 
 public class MeteDataProvider {
 

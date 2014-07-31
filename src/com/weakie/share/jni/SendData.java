@@ -1,7 +1,7 @@
-package com.weakie.jni;
+package com.weakie.share.jni;
 
-import com.weakie.bean.Point3D;
-import com.weakie.bean.Speed;
+import com.weakie.share.bean.Point3D;
+import com.weakie.share.bean.Speed;
 
 public class SendData {
 

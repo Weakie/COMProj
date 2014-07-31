@@ -1,4 +1,4 @@
-package com.weakie.view;
+package com.weakie.desktop.view;
 
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -31,9 +31,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import swing2swt.layout.BorderLayout;
 
-import com.weakie.bean.Point3D;
-import com.weakie.bean.Speed;
-import com.weakie.jni.SendData;
+import com.weakie.share.bean.Point3D;
+import com.weakie.share.bean.Speed;
+import com.weakie.share.jni.SendData;
 
 public class MainView {
 

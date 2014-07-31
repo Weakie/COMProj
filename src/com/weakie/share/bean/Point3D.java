@@ -1,4 +1,4 @@
-package com.weakie.bean;
+package com.weakie.share.bean;
 
 public class Point3D {
 

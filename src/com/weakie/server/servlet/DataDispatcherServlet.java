@@ -20,42 +20,54 @@ import com.weakie.share.jni.SendData;
  */
 public class DataDispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DataDispatcherServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public DataDispatcherServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(request.getInputStream()));
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				request.getInputStream()));
 		StringBuilder sb = new StringBuilder();
 		String line = null;
-		while((line = in.readLine())!=null){
+		while ((line = in.readLine()) != null) {
 			sb.append(line);
 		}
 		
-		Gson gson = new Gson();
-		JsonData data = gson.fromJson(sb.toString(), JsonData.class);
-		Speed speed = data.buildSpeedObject();
-		Point3D point = data.buildPoint3DObject();
-		byte[] buf = new byte[32];
+		System.out.println(sb.toString());
 		
-		SendData.getInstance().initCOM();
-		SendData.getInstance().formateData(point, speed, buf);
-		SendData.getInstance().sendData(buf);
+		try {
+			Gson gson = new Gson();
+			JsonData data = gson.fromJson(sb.toString(), JsonData.class);
+			Speed speed = data.buildSpeedObject();
+			Point3D point = data.buildPoint3DObject();
+			byte[] buf = new byte[32];
+
+			SendData.getInstance().initCOM();
+			SendData.getInstance().formateData(point, speed, buf);
+			SendData.getInstance().sendData(buf);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.getWriter().write("success");
 		return;
 	}
 

@@ -28,7 +28,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 {
 	//第一步，打开串口
 	//HANDLE m_hCom;
-	m_hCom = CreateFile((WCHAR*)_T("com4"), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+	m_hCom = CreateFile((WCHAR*)_T("com3"), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 	if (m_hCom == INVALID_HANDLE_VALUE)
 	{
 		std::cout << "CreateFile fail!" << endl;

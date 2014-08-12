@@ -6,9 +6,7 @@ import com.weakie.share.bean.Speed;
 public class SendData {
 
 	private PtrData ptrHandler;
-	
 	private static SendData instance = new SendData();
-	
 	private SendData() {
 		this.ptrHandler = new PtrData();
 	}

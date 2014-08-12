@@ -108,7 +108,7 @@ public class MainView {
 		
 		Group group = new Group(xpndblcmpstcom, SWT.NONE);
 		xpndblcmpstcom.setClient(group);
-		group.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 9, SWT.NORMAL));
+		group.setFont(SWTResourceManager.getFont("\u5FAE\u8F6F\u96C5\u9ED1", 9, SWT.NORMAL));
 		group.setText("\u521D\u59CB\u5316\u53C2\u6570");
 		RowLayout rl_group = new RowLayout(SWT.VERTICAL);
 		rl_group.marginLeft = 5;

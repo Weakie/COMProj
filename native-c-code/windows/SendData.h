@@ -100,7 +100,7 @@ bool SendData(HANDLE& m_hCom, OVERLAPPED& wrOverlapped, char* buffer, int buffer
 	
 void FormateData(Point3i pt, Speed speed, char* buffer, int bufferSize = 0)
 {
-	buffer[0] = 0x07;
+	buffer[0] = 0x01;
 	//X
 	buffer[1] = pt.x >> 24;
 	buffer[2] = (pt.x >> 16) & 255;

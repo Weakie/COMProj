@@ -5,9 +5,15 @@ import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.TableEditor;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -15,9 +21,12 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -35,6 +44,32 @@ import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
 import com.weakie.share.jni.SendData;
 
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.widgets.ToolBar;
+
+import swing2swt.layout.FlowLayout;
+import swing2swt.layout.BoxLayout;
+
+import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.jface.viewers.CheckboxCellEditor;
+import org.eclipse.jface.viewers.ComboBoxCellEditor;
+import org.eclipse.jface.viewers.ICellModifier;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.TableLayout;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TextCellEditor;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.CellEditor;
+
 public class MainView {
 
 	protected Shell shell;
@@ -46,6 +81,7 @@ public class MainView {
 	private Spinner spinner;
 	private Spinner spinner_1;
 	private Spinner spinner_2;
+	private Table table;
 
 	/**
 	 * Launch the application.
@@ -85,9 +121,9 @@ public class MainView {
 	 */
 	protected void createContents() {
 		shell = new Shell();
-		shell.setMinimumSize(new Point(630, 600));
+		shell.setMinimumSize(new Point(822, 600));
 		shell.setModified(true);
-		shell.setSize(600, 604);
+		shell.setSize(822, 604);
 		shell.setText("SWT Application");
 		shell.setLayout(new BorderLayout(0, 0));
 		
@@ -391,8 +427,62 @@ public class MainView {
 		formToolkit.paintBordersFor(tabFolder);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
-		CTabItem tabItem = new CTabItem(tabFolder, SWT.CLOSE);
-		tabItem.setText("\u54C8\u54C8");
+		CTabItem tbtmNewFile = new CTabItem(tabFolder, SWT.CLOSE);
+		tbtmNewFile.setText("new file");
+		
+		Composite composite_15 = new Composite(tabFolder, SWT.NONE);
+		tbtmNewFile.setControl(composite_15);
+		formToolkit.paintBordersFor(composite_15);
+		composite_15.setLayout(new BorderLayout(0, 0));
+		
+		final TableViewer tableViewer = new TableViewer(composite_15, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+		table = tableViewer.getTable();
+		table.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setLayoutData(BorderLayout.CENTER);
+		table.setLayout(new TableLayout());
+		formToolkit.paintBordersFor(table);
+		
+		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
+		tblclmnNewColumn.setResizable(false);
+		tblclmnNewColumn.setAlignment(SWT.CENTER);
+		tblclmnNewColumn.setWidth(156);
+		tblclmnNewColumn.setText("Point");
+		
+		TableViewerColumn tableViewerColumn_3 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnNewColumn_3 = tableViewerColumn_3.getColumn();
+		tblclmnNewColumn_3.setResizable(false);
+		tblclmnNewColumn_3.setAlignment(SWT.CENTER);
+		tblclmnNewColumn_3.setWidth(160);
+		tblclmnNewColumn_3.setText("Speed");
+		
+		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnNewColumn_2 = tableViewerColumn_2.getColumn();
+		tblclmnNewColumn_2.setResizable(false);
+		tblclmnNewColumn_2.setAlignment(SWT.CENTER);
+		tblclmnNewColumn_2.setWidth(100);
+		tblclmnNewColumn_2.setText("Time");
+		
+		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
+		tblclmnNewColumn_1.setResizable(false);
+		tblclmnNewColumn_1.setAlignment(SWT.CENTER);
+		tblclmnNewColumn_1.setWidth(224);
+		tblclmnNewColumn_1.setText("Comment");
+		
+		new TableItem(table,SWT.LEFT).setText(new String[]{"aaa","bbb","ccc","ddd"});
+		
+		tableViewer.setColumnProperties(new String[]{"point","speed","time","comment"});
+        CellEditor[] cellEditor = new CellEditor[5];
+        cellEditor[0] = null;
+        cellEditor[1] = new ComboBoxCellEditor(tableViewer.getTable(),MyCellModifier.NAMES,SWT.READ_ONLY);
+        cellEditor[2] = new CheckboxCellEditor(tableViewer.getTable());
+        cellEditor[3] = new TextCellEditor(tableViewer.getTable());
+        cellEditor[4] = null;
+        tableViewer.setCellEditors(cellEditor);
+        ICellModifier modifier = new MyCellModifier(tableViewer);
+        tableViewer.setCellModifier(modifier);
 		
 		Menu menu = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menu);
@@ -404,4 +494,79 @@ public class MainView {
 		mntmFile.setMenu(menu_1);
 
 	}
+}
+
+class MyCellModifier implements ICellModifier{
+    private TableViewer tv;
+    public static String[] NAMES ={"张三","李四","小红","翠花"};
+    
+    public MyCellModifier(TableViewer tv){
+            this.tv = tv;
+    }
+    public boolean canModify(Object element, String property) {
+        return true;
+    }
+
+    public Object getValue(Object element, String property) {
+        Step p = (Step)element;
+        if(property.equals("point")){
+           return p.getPoint();
+        }else if(property.equals("speed")){
+          return p.getSpeed();
+        }else if(property.equals("time")){
+           return p.getTime();
+        }else if(property.equals("comment")){
+        	return p.getComment();
+        }
+        throw new RuntimeException("error column name : " + property);
+    }
+   
+    public void modify(Object element, String property, Object value) {
+        TableItem item = (TableItem)element;
+        Step p = (Step)item.getData();
+        if(property.equals("point")){
+            p.setPoint(value.toString());
+         }else if(property.equals("speed")){
+          p.setSpeed(value.toString());
+         }else if(property.equals("time")){
+           p.setTime(value.toString());
+         }else if(property.equals("comment")){
+         	p.setComment(value.toString());
+         }
+        tv.update(p, null);
+    }
+    
+}
+
+class Step{
+	private String point;
+	private String speed;
+	private String time;
+	private String comment;
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
+	public String getSpeed() {
+		return speed;
+	}
+	public void setSpeed(String speed) {
+		this.speed = speed;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	
+	
 }

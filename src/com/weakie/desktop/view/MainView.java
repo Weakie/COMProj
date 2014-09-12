@@ -523,7 +523,6 @@ public class MainView {
 						item.setText(col, data);
 						text.dispose();
 					}
-					
 				});
 
 			}
@@ -546,9 +545,21 @@ public class MainView {
 		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnNewColumn_2 = tableViewerColumn_2.getColumn();
 		tblclmnNewColumn_2.setResizable(false);
-		tblclmnNewColumn_2.setAlignment(SWT.RIGHT);
+		tblclmnNewColumn_2.setAlignment(SWT.CENTER);
 		tblclmnNewColumn_2.setWidth(100);
 		tblclmnNewColumn_2.setText("Time");
+		
+		TableViewerColumn tableViewerColumn_5 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnStrategy = tableViewerColumn_5.getColumn();
+		tblclmnStrategy.setWidth(100);
+		tblclmnStrategy.setText("strategy");
+		
+		TableViewerColumn tableViewerColumn_4 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tblclmnStatus = tableViewerColumn_4.getColumn();
+		tblclmnStatus.setAlignment(SWT.CENTER);
+		tblclmnStatus.setResizable(false);
+		tblclmnStatus.setWidth(55);
+		tblclmnStatus.setText("status");
 		
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
@@ -557,7 +568,7 @@ public class MainView {
 		tblclmnNewColumn_1.setText("Comment");
 		
 		TableItem item = new TableItem(table,SWT.LEFT);
-		item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms"," "});
+		item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms","ready"," "});
 		
 		Composite composite_16 = new Composite(composite_15, SWT.NONE);
 		composite_16.setLayoutData(BorderLayout.NORTH);

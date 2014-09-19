@@ -39,7 +39,7 @@ public class Speed {
 	public static Speed parseSpeed(String value) throws Exception{
 		if(StringUtils.isEmpty(value)){
 			LogUtil.info("value in parseSpeed is null");
-			throw new Exception("value in parseSpeed is null");
+			throw new NullPointerException("value in parseSpeed is null");
 		}
 		if(StringUtils.endsWith(value, ")")){
 			value = StringUtils.substring(value, 0, value.length()-1);
@@ -49,10 +49,10 @@ public class Speed {
 		}
 		String[] values = StringUtils.split(value, ",");
 		if(values.length != 3){
-			LogUtil.info("value length is not 3");
-			throw new Exception("value length is not 3");
+			LogUtil.info("Speed value length is not 3");
+			throw new Exception("speed value length is not 3");
 		}
-		return new Speed(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
+		return new Speed(Integer.parseInt(values[0].trim()),Integer.parseInt(values[1].trim()),Integer.parseInt(values[2].trim()));
 	}
 
 }

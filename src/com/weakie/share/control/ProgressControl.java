@@ -9,4 +9,7 @@ public interface ProgressControl {
 	public void end(int id);
 	
 	public void close();
+	
+	public boolean isCanceled();
+	public void cancel();
 }

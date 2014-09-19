@@ -1,45 +1,13 @@
 package com.weakie.desktop.view;
 
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.CellEditor.LayoutData;
-import org.eclipse.jface.viewers.CheckboxCellEditor;
-import org.eclipse.jface.viewers.ColumnViewer;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
-import org.eclipse.jface.viewers.ICellModifier;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableLayout;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
-import org.eclipse.swt.custom.TableEditor;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -47,18 +15,13 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.events.ExpansionAdapter;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -68,24 +31,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import swing2swt.layout.BorderLayout;
 
-import com.weakie.desktop.view.util.DataFormat;
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
 import com.weakie.share.jni.SendData;
-
-import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.swt.custom.TableTree;
-import org.eclipse.jface.viewers.TableTreeViewer;
-import org.eclipse.jface.layout.TableColumnLayout;
-import swing2swt.layout.FlowLayout;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.layout.FillLayout;
-import swing2swt.layout.BoxLayout;
 
 public class MainView {
 
@@ -98,8 +46,6 @@ public class MainView {
 	private Spinner spinner;
 	private Spinner spinner_1;
 	private Spinner spinner_2;
-	private Table table;
-	private ToolItem tltmCopy;
 
 	/**
 	 * Launch the application.
@@ -141,7 +87,7 @@ public class MainView {
 		shell = new Shell();
 		shell.setMinimumSize(new Point(822, 600));
 		shell.setModified(true);
-		shell.setSize(822, 604);
+		shell.setSize(987, 604);
 		shell.setText("SWT Application");
 		shell.setLayout(new BorderLayout(0, 0));
 		
@@ -445,242 +391,12 @@ public class MainView {
 		formToolkit.paintBordersFor(tabFolder);
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		
-		CTabItem tbtmNewFile = new CTabItem(tabFolder, SWT.CLOSE);
-		tbtmNewFile.setText("new file");
+		CTabItem tabItem = new CTabItem(tabFolder, SWT.NONE);
+		tabItem.setText("New Item");
 		
-		Composite composite_15 = new Composite(tabFolder, SWT.NONE);
-		tbtmNewFile.setControl(composite_15);
+		Composite composite_15 = new TabEditView(tabFolder, SWT.NONE);
+		tabItem.setControl(composite_15);
 		formToolkit.paintBordersFor(composite_15);
-		composite_15.setLayout(new BorderLayout(0, 0));
-		
-		final TableViewer tableViewer = new TableViewer(composite_15, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION | SWT.MULTI);
-		table = tableViewer.getTable();
-		table.setLinesVisible(true);
-		table.setHeaderVisible(true);
-		table.setLayoutData(BorderLayout.CENTER);
-		table.setLayout(new TableLayout());
-		formToolkit.paintBordersFor(table);
-		
-		
-		final TableEditor editor = new TableEditor(table);
-	    editor.horizontalAlignment = SWT.CENTER;
-	    editor.grabHorizontal = true;
-	    table.addMouseListener(new MouseAdapter(){
-
-			@Override
-			public void mouseDoubleClick(MouseEvent event) {
-				//dispose old edit
-				Control old = editor.getEditor();
-				if (old != null)
-					old.dispose();
-
-				//get current table item
-				Point pt = new Point(event.x, event.y);
-				final TableItem item = table.getItem(pt);
-				if (item == null) {
-					return;
-				}
-				//get current column
-				int column = -1;
-				for (int i = 0, n = table.getColumnCount(); i < n; i++) {
-					Rectangle rect = item.getBounds(i);
-					if (rect.contains(pt)) {
-						column = i;
-						break;
-					}
-				}
-				if (column == -1) {
-					return;
-				}
-				//enable cell edit
-				final Text text = new Text(table, (column != 2 ? SWT.NONE : SWT.RIGHT));
-				text.setText(DataFormat.formatTextData(item.getText(column), column));
-				text.setForeground(item.getForeground());
-				text.selectAll();
-				text.setFocus();
-				
-				editor.minimumWidth = text.getBounds().width;
-				editor.setEditor(text, item, column);
-
-				final int col = column;
-				text.addModifyListener(new ModifyListener() {
-					public void modifyText(ModifyEvent event) {
-						String data = DataFormat.formatTableData(text.getText(), col);
-						item.setText(col, data);
-					}
-				});
-				
-				text.addVerifyListener(new VerifyListener(){   
-				    public void verifyText(VerifyEvent e) { 
-				    	e.doit = DataFormat.verifyTableData(e.text, col);
-				    }   
-				});  
-				
-				text.addFocusListener(new FocusAdapter(){
-					@Override
-					public void focusLost(FocusEvent arg0) {
-						String data = DataFormat.formatTableData(text.getText(), col);
-						item.setText(col, data);
-						text.dispose();
-					}
-				});
-
-			}
-	    });
-	    
-	    
-	    
-		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
-		tblclmnNewColumn.setResizable(false);
-		tblclmnNewColumn.setWidth(156);
-		tblclmnNewColumn.setText("Point");
-		
-		TableViewerColumn tableViewerColumn_3 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn_3 = tableViewerColumn_3.getColumn();
-		tblclmnNewColumn_3.setResizable(false);
-		tblclmnNewColumn_3.setWidth(160);
-		tblclmnNewColumn_3.setText("Speed");
-		
-		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn_2 = tableViewerColumn_2.getColumn();
-		tblclmnNewColumn_2.setResizable(false);
-		tblclmnNewColumn_2.setAlignment(SWT.CENTER);
-		tblclmnNewColumn_2.setWidth(100);
-		tblclmnNewColumn_2.setText("Time");
-		
-		TableViewerColumn tableViewerColumn_5 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnStrategy = tableViewerColumn_5.getColumn();
-		tblclmnStrategy.setWidth(100);
-		tblclmnStrategy.setText("strategy");
-		
-		TableViewerColumn tableViewerColumn_4 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnStatus = tableViewerColumn_4.getColumn();
-		tblclmnStatus.setAlignment(SWT.CENTER);
-		tblclmnStatus.setResizable(false);
-		tblclmnStatus.setWidth(55);
-		tblclmnStatus.setText("status");
-		
-		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
-		tblclmnNewColumn_1.setResizable(false);
-		tblclmnNewColumn_1.setWidth(224);
-		tblclmnNewColumn_1.setText("Comment");
-		
-		TableItem item = new TableItem(table,SWT.LEFT);
-		item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms","ready"," "});
-		
-		Composite composite_16 = new Composite(composite_15, SWT.NONE);
-		composite_16.setLayoutData(BorderLayout.NORTH);
-		formToolkit.adapt(composite_16);
-		formToolkit.paintBordersFor(composite_16);
-		composite_16.setLayout(new BorderLayout(0, 0));
-		
-		ToolBar toolBar = new ToolBar(composite_16, SWT.FLAT | SWT.RIGHT);
-		formToolkit.adapt(toolBar);
-		formToolkit.paintBordersFor(toolBar);
-		
-		tltmCopy = new ToolItem(toolBar, SWT.CHECK);
-		tltmCopy.setText("Copy");
-		
-		ToolItem tltmAddfirst = new ToolItem(toolBar, SWT.NONE);
-		tltmAddfirst.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				TableItem item = new TableItem(table,SWT.LEFT,0);
-				item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms"," "});
-			}
-		});
-		tltmAddfirst.setText("AddFirst");
-		
-		ToolItem tltmAddlast = new ToolItem(toolBar, SWT.NONE);
-		tltmAddlast.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int count = table.getItemCount();
-				TableItem item = new TableItem(table,SWT.LEFT,count);
-				item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms"," "});
-			}
-		});
-		tltmAddlast.setText("AddLast");
-		
-		ToolItem tltmAdd = new ToolItem(toolBar, SWT.NONE);
-		tltmAdd.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int index = tableViewer.getTable().getSelectionIndex();
-				if(index == -1){
-					index = 0;
-				}
-				TableItem item = new TableItem(table,SWT.LEFT,index);
-				item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms"," "});
-			}
-		});
-		tltmAdd.setText("AddBefore");
-		
-		ToolItem tltmAddafter = new ToolItem(toolBar, SWT.NONE);
-		tltmAddafter.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int index = tableViewer.getTable().getSelectionIndex();
-				if(index == -1){
-					index = table.getItemCount()-1;
-				}
-				TableItem item = new TableItem(table,SWT.LEFT,index+1);
-				item.setText(new String[]{"(1,1,1)","(1,1,1)","2ms"," "});
-			}
-		});
-		tltmAddafter.setText("AddAfter");
-		
-		ToolItem tltmDel = new ToolItem(toolBar, SWT.NONE);
-		tltmDel.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				int[] index = table.getSelectionIndices();
-				if(index.length==0){
-					return;
-				}
-				table.remove(index);
-			}
-		});
-		tltmDel.setText("Delete");
-		
-		Composite composite_17 = new Composite(composite_15, SWT.NONE);
-		composite_17.setLayoutData(BorderLayout.SOUTH);
-		formToolkit.adapt(composite_17);
-		formToolkit.paintBordersFor(composite_17);
-		GridLayout gl_composite_17 = new GridLayout(7, false);
-		gl_composite_17.marginWidth = 2;
-		gl_composite_17.marginTop = 2;
-		gl_composite_17.marginHeight = 2;
-		composite_17.setLayout(gl_composite_17);
-		
-		Button btnCheckButton = new Button(composite_17, SWT.CHECK);
-		formToolkit.adapt(btnCheckButton, true, true);
-		btnCheckButton.setText("Check Button");
-		
-		Button btnNewButton = new Button(composite_17, SWT.NONE);
-		formToolkit.adapt(btnNewButton, true, true);
-		btnNewButton.setText("RUN\r\n");
-		
-		Button btnNewButton_1 = new Button(composite_17, SWT.NONE);
-		formToolkit.adapt(btnNewButton_1, true, true);
-		btnNewButton_1.setText("CANCEL");
-		new Label(composite_17, SWT.NONE);
-		
-		Label lblNewLabel = new Label(composite_17, SWT.NONE);
-		formToolkit.adapt(lblNewLabel, true, true);
-		lblNewLabel.setText("%");
-		new Label(composite_17, SWT.NONE);
-		
-		ProgressBar progressBar = new ProgressBar(composite_17, SWT.NONE);
-		GridData gd_progressBar = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_progressBar.widthHint = 274;
-		progressBar.setLayoutData(gd_progressBar);
-		formToolkit.adapt(progressBar, true, true);
-		
-		CTabItem tbtmFile = new CTabItem(tabFolder, SWT.NONE);
-		tbtmFile.setText("file");
 		
 		
 		Menu menu = new Menu(shell, SWT.BAR);

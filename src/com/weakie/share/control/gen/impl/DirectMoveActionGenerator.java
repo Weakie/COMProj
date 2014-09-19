@@ -14,8 +14,8 @@ import com.weakie.share.control.gen.ActionGeneratorProducer;
  */
 public class DirectMoveActionGenerator extends AbstractActionGenerator {
 
-	private static String TYPE = "DirectMove";
-	private static String DESCRIPT = "move point directly between two points";
+	public static final String TYPE = "DirectMove";
+	public static final String DESCRIPT = "move point directly between two points";
 	static{
 		ActionGeneratorProducer.register(TYPE, DirectMoveActionGenerator.class.getName());
 	}

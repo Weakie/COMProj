@@ -43,7 +43,7 @@ public class Point3D {
 	public static Point3D parsePoint3D(String value) throws Exception{
 		if(StringUtils.isEmpty(value)){
 			LogUtil.info("value in parsePoint is null");
-			throw new Exception("value in parsePoint is null");
+			throw new NullPointerException("value in parsePoint is null");
 		}
 		if(StringUtils.endsWith(value, ")")){
 			value = StringUtils.substring(value, 0, value.length()-1);
@@ -53,10 +53,15 @@ public class Point3D {
 		}
 		String[] values = StringUtils.split(value, ",");
 		if(values.length != 3){
-			LogUtil.info("value length is not 3");
-			throw new Exception("value length is not 3");
+			LogUtil.info("Point value length is not 3");
+			throw new Exception("point value length is not 3");
 		}
-		return new Point3D(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
+		return new Point3D(Integer.parseInt(values[0].trim()),Integer.parseInt(values[1].trim()),Integer.parseInt(values[2].trim()));
+	}
+
+	@Override
+	public String toString() {
+		return "Point3D [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 	
 }

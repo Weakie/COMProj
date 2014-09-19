@@ -74,6 +74,8 @@ public class ActionDispatcherControl {
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			} catch (Throwable a){
+				a.printStackTrace();
 			} finally {
 				this.control.close();
 			}

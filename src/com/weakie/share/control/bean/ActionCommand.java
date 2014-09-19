@@ -18,12 +18,12 @@ public class ActionCommand {
 	private String comment;
 	private Map<String,Object> param = new HashMap<String,Object>();
 	
-	public ActionCommand(int id,String beginPoint,String endPoint,String speed,String time,String type,String comment) throws Exception {
+	public ActionCommand(int id,Point3D beginPoint,Point3D endPoint,Speed speed,long time,String type,String comment){
 		this.id = id;
-		this.beginPoint = Point3D.parsePoint3D(beginPoint);
-		this.endPoint = Point3D.parsePoint3D(endPoint);
-		this.speed = Speed.parseSpeed(speed);
-		this.time = Long.parseLong(time);
+		this.beginPoint = beginPoint;
+		this.endPoint = endPoint;
+		this.speed = speed;
+		this.time = time;
 		this.type = type;
 		this.comment = comment;
 	}

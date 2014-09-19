@@ -15,8 +15,8 @@ import com.weakie.share.control.gen.ActionGeneratorProducer;
  */
 public class DefaultActionGenerator extends AbstractActionGenerator {
 
-	private static String TYPE = "StraightMove";
-	private static String DESCRIPT = "move point straight between two points";
+	public static final String TYPE = "StraightMove";
+	public static final String DESCRIPT = "move point straight between two points";
 	static{
 		ActionGeneratorProducer.register(TYPE, DefaultActionGenerator.class.getName());
 	}

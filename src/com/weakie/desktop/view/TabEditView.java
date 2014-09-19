@@ -39,12 +39,12 @@ import swing2swt.layout.BorderLayout;
 
 import com.weakie.desktop.bean.TablePropertieFactory;
 import com.weakie.desktop.bean.propertie.ViewProperties;
-import com.weakie.desktop.util.LogUtil;
 import com.weakie.desktop.view.listener.DataModifyListener;
 import com.weakie.share.control.ActionDispatcherControl;
 import com.weakie.share.control.ProgressControl;
 import com.weakie.share.control.bean.ActionCommand;
 import com.weakie.share.control.gen.ActionGeneratorProducer;
+import com.weakie.share.util.LogUtil;
 
 public class TabEditView extends Composite {
 

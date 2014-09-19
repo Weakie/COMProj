@@ -1,4 +1,4 @@
-package com.weakie.desktop.util;
+package com.weakie.share.util;
 
 public class LogUtil {
 

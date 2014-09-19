@@ -5,12 +5,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.weakie.desktop.util.LogUtil;
 import com.weakie.share.control.bean.ActionCommand;
 import com.weakie.share.control.gen.AbstractActionGenerator;
 import com.weakie.share.control.gen.ActionBean;
 import com.weakie.share.control.gen.ActionGeneratorProducer;
 import com.weakie.share.jni.SendData;
+import com.weakie.share.util.LogUtil;
 
 public class ActionDispatcherControl {
 

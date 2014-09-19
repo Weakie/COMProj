@@ -2,7 +2,7 @@ package com.weakie.share.bean;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.weakie.desktop.util.LogUtil;
+import com.weakie.share.util.LogUtil;
 
 public class Point3D {
 

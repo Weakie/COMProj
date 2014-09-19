@@ -56,7 +56,12 @@ public class Point3D {
 			LogUtil.info("Point value length is not 3");
 			throw new Exception("point value length is not 3");
 		}
-		return new Point3D(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
+		return new Point3D(Integer.parseInt(values[0].trim()),Integer.parseInt(values[1].trim()),Integer.parseInt(values[2].trim()));
+	}
+
+	@Override
+	public String toString() {
+		return "Point3D [x=" + x + ", y=" + y + ", z=" + z + "]";
 	}
 	
 }

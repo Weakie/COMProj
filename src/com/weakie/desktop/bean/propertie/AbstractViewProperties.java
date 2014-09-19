@@ -32,7 +32,7 @@ public abstract class AbstractViewProperties implements ViewProperties{
 		param.put(keys[0], "(0,0,0)");
 		param.put(keys[1], "(1,1,1)");
 		param.put(keys[2], "(1,1,1)");
-		param.put(keys[3], "2");
+		param.put(keys[3], "2000");
 		param.put(keys[4], this.getType());
 		param.put(keys[5], "");
 	}
@@ -65,7 +65,7 @@ public abstract class AbstractViewProperties implements ViewProperties{
 	}
 
 	@Override
-	public ActionCommand createActionCommand() {
+	public ActionCommand createActionCommand(int id) {
 		Point3D beginPoint = null;;
 		Point3D endPoint = null;
 		Speed speed = null;
@@ -84,7 +84,7 @@ public abstract class AbstractViewProperties implements ViewProperties{
 		
 		long time = Long.parseLong(param.get(keys[3]));
 		ActionCommand ac = new ActionCommand(
-				0,
+				id,
 				beginPoint,
 				endPoint, 
 				speed, 

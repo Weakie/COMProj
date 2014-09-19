@@ -116,7 +116,7 @@ public class PropertiesView extends Composite {
 		
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnValue = tableViewerColumn_1.getColumn();
-		tblclmnValue.setWidth(100);
+		tblclmnValue.setWidth(150);
 		tblclmnValue.setText("value");
 		
 		ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);

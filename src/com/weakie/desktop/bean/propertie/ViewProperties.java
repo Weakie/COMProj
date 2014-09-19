@@ -20,5 +20,5 @@ public interface ViewProperties {
 	
 	public String getType();
 	
-	public ActionCommand createActionCommand();
+	public ActionCommand createActionCommand(int id);
 }

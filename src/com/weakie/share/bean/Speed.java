@@ -52,7 +52,7 @@ public class Speed {
 			LogUtil.info("Speed value length is not 3");
 			throw new Exception("speed value length is not 3");
 		}
-		return new Speed(Integer.parseInt(values[0]),Integer.parseInt(values[1]),Integer.parseInt(values[2]));
+		return new Speed(Integer.parseInt(values[0].trim()),Integer.parseInt(values[1].trim()),Integer.parseInt(values[2].trim()));
 	}
 
 }

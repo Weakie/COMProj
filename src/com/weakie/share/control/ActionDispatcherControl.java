@@ -58,7 +58,7 @@ public class ActionDispatcherControl {
 					AbstractActionGenerator gen = ActionGeneratorProducer.build(ac);
 					long timeFlag = System.currentTimeMillis();
 					for (ActionBean b : gen) {
-						if (Thread.interrupted()) {
+						if (Thread.interrupted() || this.control.isCanceled()) {
 							break end;
 						}
 						SendData.getInstance().formateData(b.getPoint(),b.getSpeed(), buf);

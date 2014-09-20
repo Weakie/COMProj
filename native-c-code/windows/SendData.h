@@ -26,9 +26,9 @@ void FormateData(Point3i pt, Speed speed, char* buffer, int bufferSize);
 
 bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 {
-	//µ⁄“ª≤Ω£¨¥Úø™¥Æø⁄
+	//Á¨¨‰∏ÄÊ≠•ÔºåÊâìÂºÄ‰∏≤Âè£
 	//HANDLE m_hCom;
-	m_hCom = CreateFile((WCHAR*)_T("com3"), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+	m_hCom = CreateFile((WCHAR*)_T("com5"), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 	if (m_hCom == INVALID_HANDLE_VALUE)
 	{
 		std::cout << "CreateFile fail!" << endl;
@@ -36,7 +36,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 	}
 	//cout << "CreateFile OK!" << endl;
 
-	//µ⁄∂˛≤Ω£¨…Ë÷√ª∫≥Â«¯¥Û–°
+	//Á¨¨‰∫åÊ≠•ÔºåËÆæÁΩÆÁºìÂÜ≤Âå∫Â§ßÂ∞è
 	if (!SetupComm(m_hCom, 2048, 2048))
 	{
 		cout << "SetupComm fail! Close Comm!" << endl;
@@ -45,7 +45,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 	}
 	//cout << "SetupComm OK!" << endl;
 
-	//µ⁄»˝≤Ω£¨…Ë÷√≥¨ ±
+	//Á¨¨‰∏âÊ≠•ÔºåËÆæÁΩÆË∂ÖÊó∂
 	COMMTIMEOUTS TimeOuts;
 	memset(&TimeOuts, 0, sizeof(TimeOuts));
 	TimeOuts.ReadIntervalTimeout = MAXDWORD;
@@ -55,7 +55,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 	TimeOuts.WriteTotalTimeoutMultiplier = 2000;
 	SetCommTimeouts(m_hCom, &TimeOuts);
 
-	//µ⁄Àƒ≤Ω£¨…Ë÷√¥Æø⁄≤Œ ˝
+	//Á¨¨ÂõõÊ≠•ÔºåËÆæÁΩÆ‰∏≤Âè£ÂèÇÊï∞
 	DCB dcb;
 	if (!GetCommState(m_hCom, &dcb))
 	{
@@ -66,9 +66,9 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 	//cout << "GetCommState OK!" << endl;
 
 	dcb.DCBlength = sizeof(dcb);
-	if (!BuildCommDCB((WCHAR*)_T("9600,n,8,1"), &dcb))//ÃÓ≥‰DCBµƒ ˝æ›¥´ ‰¬ °¢∆Ê≈º–£—È¿‡–Õ°¢ ˝æ›Œª°¢Õ£÷πŒª
+	if (!BuildCommDCB((WCHAR*)_T("9600,n,8,1"), &dcb))//Â°´ÂÖÖDCBÁöÑÊï∞ÊçÆ‰º†ËæìÁéá„ÄÅÂ•áÂÅ∂Ê†°È™åÁ±ªÂûã„ÄÅÊï∞ÊçÆ‰Ωç„ÄÅÂÅúÊ≠¢‰Ωç
 	{
-		//≤Œ ˝–ﬁ∏ƒ¥ÌŒÛ£¨Ω¯––¥ÌŒÛ¥¶¿Ì
+		//ÂèÇÊï∞‰øÆÊîπÈîôËØØÔºåËøõË°åÈîôËØØÂ§ÑÁêÜ
 		cout << "BuileCOmmDCB fail,Comm close!" << endl;
 		CloseHandle(m_hCom);
 		return false;
@@ -78,7 +78,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
 		//cout << "SetCommState OK!" << endl;
 	}
 
-	//µ⁄ŒÂ≤Ω£¨Ω®¡¢≤¢≥ı ºªØ÷ÿµ˛Ω·ππ
+	//Á¨¨‰∫îÊ≠•ÔºåÂª∫Á´ãÂπ∂ÂàùÂßãÂåñÈáçÂè†ÁªìÊûÑ
 	ZeroMemory(&wrOverlapped, sizeof(wrOverlapped));
 	if (wrOverlapped.hEvent != NULL)
 	{

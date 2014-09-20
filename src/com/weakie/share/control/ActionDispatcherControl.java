@@ -26,7 +26,7 @@ public class ActionDispatcherControl {
 		this.taskExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
 
-	public void executeCommands(List<ActionCommand> commandList,
+	public synchronized void executeCommands(List<ActionCommand> commandList,
 			ProgressControl control) {
 		if (commandList == null || commandList.isEmpty()) {
 			LogUtil.info("action list is empty, do not execute it");
@@ -83,4 +83,10 @@ public class ActionDispatcherControl {
 
 	}
 
+	/**
+	 * Once shutdown,never come back, this method only called while the app is shutdown!
+	 */
+	public synchronized void destroy(){
+		this.taskExecutor.shutdownNow();
+	}
 }

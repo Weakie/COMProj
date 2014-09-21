@@ -8,8 +8,13 @@ import com.weakie.share.control.gen.ActionBean;
 
 public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 
+<<<<<<< HEAD
 
 	private static final String DESCRIPT = "haha";
+=======
+	private static String TYPE = "SNAKE";
+	
+>>>>>>> 72fb615846512997153eb49975484514a67807f9
 	public SnakeMoveActionGenerator() {
 		// TODO Auto-generated constructor stub
 	}

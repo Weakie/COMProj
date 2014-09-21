@@ -94,7 +94,7 @@ public class PropertiesView extends Composite {
 				
 				text.addVerifyListener(new VerifyListener(){   
 				    public void verifyText(VerifyEvent e) { 
-				    	e.doit = DataFormat.verifyTableData(e.text, column);
+				    	//e.doit = DataFormat.verifyTableData(e.text, column);
 				    }   
 				});  
 				

@@ -32,7 +32,6 @@ import swing2swt.layout.BorderLayout;
 
 import com.weakie.desktop.bean.propertie.ViewProperties;
 import com.weakie.desktop.view.listener.DataModifyListener;
-import com.weakie.desktop.view.util.DataFormat;
 
 public class PropertiesView extends Composite {
 

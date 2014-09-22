@@ -8,9 +8,12 @@ import com.weakie.share.control.gen.ActionBean;
 
 public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 
-	private static final String DESCRIPT = "haha";
-
-	private static String TYPE = "SNAKE";
+	private static final String TYPE = "SnakeMove";
+	private static final String DESCRIPT = "Generate moved points as a snake move path.";
+	
+	private int amplitude;
+	private int phase;
+	private int period;
 	
 	public SnakeMoveActionGenerator() {
 		// TODO Auto-generated constructor stub
@@ -36,14 +39,13 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return TYPE;
 	}
 
 	@Override
 	public String getDescript() {
 		// TODO Auto-generated method stub
-		return null;
+		return DESCRIPT;
 	}
 
 }

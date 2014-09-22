@@ -39,9 +39,9 @@ public class DefaultActionGenerator extends AbstractActionGenerator {
 		@Override
 		public ActionBean next() {
 			this.hasNext = false;
-			int sx = Math.abs((int) ((endPoint.getX()-beginPoint.getX())/totalTime));
-			int sy = Math.abs((int) ((endPoint.getY()-beginPoint.getY())/totalTime));
-			int sz = Math.abs((int) ((endPoint.getZ()-beginPoint.getZ())/totalTime));
+			int sx = Math.abs((int) ((endPoint.getX()-beginPoint.getX())*1000/totalTime));
+			int sy = Math.abs((int) ((endPoint.getY()-beginPoint.getY())*1000/totalTime));
+			int sz = Math.abs((int) ((endPoint.getZ()-beginPoint.getZ())*1000/totalTime));
 			return new ActionBean(0,endPoint,new Speed(sx,sy,sz),totalTime);
 		}
 		

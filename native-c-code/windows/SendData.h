@@ -33,7 +33,7 @@ bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped);
 
 bool SendData(HANDLE& m_hCom, OVERLAPPED& wrOverlapped, char* buffer, int bufferSize);
 
-void FormateData(Point3i pt, Speed speed, char* buffer, int flag = ControlFlag::RELATIVE_POSITION);
+void FormateData(Point3i pt, Speed speed, char* buffer, int flag = ControlFlag::ABSOLUTE_POSITION);
 
 double MoveTime(Point3i start, Point3i end, Speed sp, double delay = 0);
 

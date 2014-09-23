@@ -45,18 +45,15 @@ public abstract class AbstractActionGenerator implements Iterable<ActionBean> {
 
 	public abstract int getSize();
 	/**
-	 * 设置参数
 	 * @param value
 	 */
 	public abstract void setParameter(Map<String,Object> value);
 	
 	/**
-	 * 子类返回具体的类型
 	 * @return
 	 */
 	public abstract String getType();
 	/**
-	 * 子类返回具体的描述
 	 * @return
 	 */
 	public abstract String getDescript();

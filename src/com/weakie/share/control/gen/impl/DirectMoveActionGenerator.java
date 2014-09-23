@@ -10,7 +10,6 @@ import com.weakie.share.control.gen.ActionGeneratorProducer;
 /**
  * Attention: current point must be same with the begin point!
  * @author weakie E-mail:weakielin@gmail.com
- * 2014年9月9日上午9:31:24
  */
 public class DirectMoveActionGenerator extends AbstractActionGenerator {
 

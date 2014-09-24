@@ -136,11 +136,12 @@ public class PropertiesView extends Composite {
 		this.showProperties();
 	}
 	
-	private void save(){
+	private boolean save(){
 		if(this.listener == null || !this.listener.isAlive()){
-			return;
+			return false;
 		}
 		this.listener.update(this.getProperties());
+		return true;
 	}
 	
 	private Map<String,String> getProperties(){

@@ -80,8 +80,10 @@ public class TabEditView extends Composite {
 		}
 		
 		@Override
-		public synchronized void disable() {
-			this.active = false;
+		public synchronized void disable(int index) {
+			if (this.index == index) {
+				this.active = false;
+			}
 		}
 
 		@Override
@@ -377,7 +379,7 @@ public class TabEditView extends Composite {
 				for(ViewProperties vp:data){
 					command.add(vp.createActionCommand(id++));
 				}
-				ActionDispatcherControl.getInstance().executeCommands(command, control);
+				ActionDispatcherControl.getInstance().executeCommands(command, control, false);
 				LogUtil.info("Run all, new Command list is generated and send!");
 				btnRunAll.setEnabled(false);
 				btnNewButton.setEnabled(false);
@@ -397,7 +399,7 @@ public class TabEditView extends Composite {
 					ViewProperties vp = data.get(i);
 					command.add(vp.createActionCommand(i));
 				}
-				ActionDispatcherControl.getInstance().executeCommands(command, control);
+				ActionDispatcherControl.getInstance().executeCommands(command, control, false);
 				LogUtil.info("Run selected, new Command list is generated and send!");
 				btnRunAll.setEnabled(false);
 				btnNewButton.setEnabled(false);
@@ -442,7 +444,8 @@ public class TabEditView extends Composite {
 		table.remove(index);
 		Arrays.sort(index);
 		for(int i = index.length-1;i>=0;i--){
-			data.remove(i);
+			data.remove(index[i]);
+			listener.disable(index[i]);
 		}
 	}
 	

@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.weakie.share.bean.Point3D;
 import com.weakie.share.control.bean.ActionCommand;
 import com.weakie.share.control.gen.AbstractActionGenerator;
 import com.weakie.share.control.gen.ActionBean;
@@ -13,37 +14,49 @@ import com.weakie.share.jni.SendData;
 import com.weakie.share.util.LogUtil;
 
 public class ActionDispatcherControl {
-
+	
 	private static ActionDispatcherControl instance = new ActionDispatcherControl();
-
 	public static ActionDispatcherControl getInstance() {
 		return instance;
 	}
 
 	private ScheduledExecutorService taskExecutor;
-
+	private Point3D basePoint;
+	
 	private ActionDispatcherControl() {
+		this.basePoint = new Point3D(0,0,0);
 		this.taskExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
 
+	public synchronized void setBasePoint(Point3D basePoint){
+		this.basePoint = basePoint;
+	}
+	
 	public synchronized void executeCommands(List<ActionCommand> commandList,
-			ProgressControl control) {
+			ProgressControl control, boolean addbase) {
 		if (commandList == null || commandList.isEmpty()) {
 			LogUtil.info("action list is empty, do not execute it");
 			return;
 		}
-		Runnable task = new DispatcherTask(commandList, control);
+		Runnable task = new DispatcherTask(commandList, control,
+				(addbase ? basePoint : null));
 		this.taskExecutor.schedule(task, 2, TimeUnit.SECONDS);
 	}
 
 	private static class DispatcherTask implements Runnable {
 
+		private Point3D basePoint;
 		private ProgressControl control;
 		private List<ActionCommand> commandList;
 
 		public DispatcherTask(List<ActionCommand> list, ProgressControl control) {
 			this.commandList = list;
 			this.control = control;
+		}
+		
+		public DispatcherTask(List<ActionCommand> list, ProgressControl control,Point3D basePoint) {
+			this(list, control);
+			this.basePoint = basePoint;
 		}
 
 		@Override
@@ -52,26 +65,33 @@ public class ActionDispatcherControl {
 			try {
 				byte[] buf = new byte[32];
 				this.control.init(this.commandList.size());
+				
 				end: for (ActionCommand ac : commandList) {
 					this.control.begin(ac.getId());
 					
 					AbstractActionGenerator gen = ActionGeneratorProducer.build(ac);
 					long timeFlag = System.currentTimeMillis();
 					for (ActionBean b : gen) {
+						//check if the threadPool shutdown or task canceled 
 						if (Thread.interrupted() || this.control.isCanceled()) {
 							break end;
 						}
-						SendData.getInstance().formateData(b.getPoint(),b.getSpeed(), buf);
+						
+						//Format and Send data
+						SendData.getInstance().formateData(b.getPoint(basePoint), b.getSpeed(), buf);
 						SendData.getInstance().sendData(buf);
-						//control time to sleep,avoid the calculate influence
+						
+						//control time to sleep, avoid the influence of calculate time 
 						Thread.sleep(Math.max(b.getTime()+(timeFlag-System.currentTimeMillis()),0));
 						timeFlag = System.currentTimeMillis();
-						//update ui
+						
+						//update UI of command state
 						this.control.update(ac.getId(), b.getPoint()+"");
 					}
 					
 					this.control.end(ac.getId());
 				}
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (Throwable a){

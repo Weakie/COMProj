@@ -243,6 +243,7 @@ public class MainView {
 			spinner_sx = new Spinner(composite_1, SWT.BORDER);
 			spinner_sx.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_sx.setMaximum(10000000);
+			spinner_sx.setSelection(6000);
 			spinner_sx.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_sx);
 			formToolkit.paintBordersFor(spinner_sx);
@@ -259,6 +260,7 @@ public class MainView {
 			spinner_sy = new Spinner(composite_2, SWT.BORDER);
 			spinner_sy.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_sy.setMaximum(10000000);
+			spinner_sy.setSelection(6000);
 			spinner_sy.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_sy);
 			formToolkit.paintBordersFor(spinner_sy);
@@ -275,6 +277,7 @@ public class MainView {
 			spinner_sz = new Spinner(composite_3, SWT.BORDER);
 			spinner_sz.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_sz.setMaximum(10000000);
+			spinner_sz.setSelection(6000);
 			spinner_sz.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_sz);
 			formToolkit.paintBordersFor(spinner_sz);
@@ -357,6 +360,15 @@ public class MainView {
 			spinner_z.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			formToolkit.adapt(spinner_z);
 			formToolkit.paintBordersFor(spinner_z);
+			
+			Composite composite_1 = new Composite(group_1, SWT.NONE);
+			formToolkit.adapt(composite_1);
+			formToolkit.paintBordersFor(composite_1);
+			
+			Button btnCheckButton = new Button(composite_1, SWT.CHECK);
+			btnCheckButton.setBounds(10, 10, 98, 17);
+			formToolkit.adapt(btnCheckButton, true, true);
+			btnCheckButton.setText("Check Button");
 		}
 		{
 			ExpandableComposite expandableComposite = formToolkit.createExpandableComposite(composite, ExpandableComposite.TWISTIE);
@@ -397,6 +409,7 @@ public class MainView {
 			spinner_dx.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_dx.setMaximum(10000000);
 			spinner_dx.setMinimum(-10000000);
+			spinner_dx.setSelection(100);
 			spinner_dx.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_dx);
 			formToolkit.paintBordersFor(spinner_dx);
@@ -425,6 +438,7 @@ public class MainView {
 			spinner_dy.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_dy.setMaximum(10000000);
 			spinner_dy.setMinimum(-10000000);
+			spinner_dy.setSelection(100);
 			spinner_dy.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_dy);
 			formToolkit.paintBordersFor(spinner_dy);
@@ -452,6 +466,7 @@ public class MainView {
 			spinner_dz.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
 			spinner_dz.setMaximum(10000000);
 			spinner_dz.setMinimum(-10000000);
+			spinner_dz.setSelection(100);
 			spinner_dz.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
 			formToolkit.adapt(spinner_dz);
 			formToolkit.paintBordersFor(spinner_dz);

@@ -12,7 +12,7 @@ public interface DataModifyListener {
 	
 	public boolean isAlive();
 	
-	public void disable();
+	public void disable(int index);
 	
 	public void enable(int index);
 }

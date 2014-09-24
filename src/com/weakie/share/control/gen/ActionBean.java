@@ -24,6 +24,13 @@ public class ActionBean {
 	public Point3D getPoint() {
 		return point;
 	}
+	
+	public Point3D getPoint(Point3D base) {
+		if(base == null){
+			return this.point;
+		}
+		return Point3D.addPoint(point, base);
+	}
 
 	public Speed getSpeed() {
 		return speed;

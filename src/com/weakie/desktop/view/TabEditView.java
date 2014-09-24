@@ -95,6 +95,8 @@ public class TabEditView extends Composite {
 		private volatile boolean isCanceled = false;
 		private int size = 0;
 		private int finishedSize = 0;
+		private long timeFlag = 0;
+		
 		@Override
 		public void update(int id, String value) {
 			LogUtil.info("begin:"+id+",value:"+value);
@@ -112,7 +114,8 @@ public class TabEditView extends Composite {
 		@Override
 		public void end(int id) {
 			LogUtil.info("end:"+id);
-			updateProgress(id,finishedSize, size);
+			long time = System.currentTimeMillis()-timeFlag;
+			updateProgress(id, finishedSize, size, time);
 		}
 		
 		@Override
@@ -125,6 +128,7 @@ public class TabEditView extends Composite {
 		public void begin(int id) {
 			LogUtil.info("begin:"+id);
 			finishedSize++;
+			timeFlag = System.currentTimeMillis();
 		}
 
 		@Override
@@ -242,13 +246,13 @@ public class TabEditView extends Composite {
 		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
 		tblclmnNewColumn.setResizable(false);
-		tblclmnNewColumn.setWidth(156);
+		tblclmnNewColumn.setWidth(150);
 		tblclmnNewColumn.setText("TargetPoint");
 		
 		TableViewerColumn tableViewerColumn_3 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnNewColumn_3 = tableViewerColumn_3.getColumn();
 		tblclmnNewColumn_3.setResizable(false);
-		tblclmnNewColumn_3.setWidth(160);
+		tblclmnNewColumn_3.setWidth(150);
 		tblclmnNewColumn_3.setText("Speed");
 		
 		TableViewerColumn tableViewerColumn_2 = new TableViewerColumn(tableViewer, SWT.NONE);
@@ -260,10 +264,10 @@ public class TabEditView extends Composite {
 		    
 		TableViewerColumn tableViewerColumn_4 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnStatus = tableViewerColumn_4.getColumn();
-		tblclmnStatus.setAlignment(SWT.CENTER);
+		tblclmnStatus.setAlignment(SWT.LEFT);
 		tblclmnStatus.setResizable(false);
-		tblclmnStatus.setWidth(83);
-		tblclmnStatus.setText("status");
+		tblclmnStatus.setWidth(100);
+		tblclmnStatus.setText("Status");
 		
 		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
 		TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
@@ -480,7 +484,7 @@ public class TabEditView extends Composite {
 			}
 		});
 	}
-	private void updateProgress(final int id,final int finishedSize,final int size){
+	private void updateProgress(final int id,final int finishedSize,final int size,final long time){
 		Display.getDefault().asyncExec(new Runnable(){
 
 			@Override
@@ -488,7 +492,7 @@ public class TabEditView extends Composite {
 				progressBar.setSelection(finishedSize);
 				lblNewLabel.setText(""+(finishedSize*100/size)+"%");
 				TableItem item = table.getItem(id);
-				item.setText(4, "finished");
+				item.setText(4, "Ok,time(ms)="+time);
 			}
 			
 		});

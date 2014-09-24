@@ -2,11 +2,13 @@ package com.weakie.share.jni;
 
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
+import com.weakie.share.util.LogUtil;
 
 public class SendData {
 
 	private PtrData ptrHandler;
 	private static SendData instance = new SendData();
+	
 	private SendData() {
 		this.ptrHandler = new PtrData();
 	}
@@ -15,9 +17,13 @@ public class SendData {
 		return instance;
 	}
 	
+	public synchronized boolean isInited(){
+		return this.ptrHandler.isInited();
+	}
+	
 	public synchronized void initCOM(){
 		if(this.ptrHandler.isInited()){
-			System.out.println("COM is already initialized");
+			LogUtil.info("COM is already initialized");
 			return;
 		}
 		SendData.initCOM(ptrHandler);
@@ -26,7 +32,7 @@ public class SendData {
 	
 	public synchronized void sendData(byte[] buffer){
 		if(!this.ptrHandler.isInited()){
-			System.out.println("COM is already destroyed, please init it before send data");
+			LogUtil.info("COM is already destroyed, please init it before send data");
 			return;
 		}
 		SendData.sendData(ptrHandler, buffer);
@@ -34,7 +40,7 @@ public class SendData {
 	
 	public synchronized void destroy(){
 		if(!this.ptrHandler.isInited()){
-			System.out.println("COM is already destroyed");
+			LogUtil.info("COM is already destroyed");
 			return;
 		}
 		SendData.destroy(ptrHandler);
@@ -43,7 +49,7 @@ public class SendData {
 	
 	public void formateData(Point3D p,Speed s,byte[] buf){
 		if(buf==null || buf.length<32){
-			System.out.println("please init buf first");
+			LogUtil.info("please init buf first");
 		}
 		SendData.formatData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), buf);
 	}

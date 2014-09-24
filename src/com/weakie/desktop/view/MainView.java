@@ -30,6 +30,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import swing2swt.layout.BorderLayout;
+import swing2swt.layout.BoxLayout;
 
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
@@ -50,6 +51,7 @@ public class MainView {
 	private Spinner spinner_sx;
 	private Spinner spinner_sy;
 	private Spinner spinner_sz;
+	private Label comStateLabel;
 
 	/**
 	 * Launch the application.
@@ -470,6 +472,7 @@ public class MainView {
 		}
 		
 		Composite composite_11 = new Composite(composite, SWT.NONE);
+		composite_11.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		RowLayout rl_composite_11 = new RowLayout(SWT.HORIZONTAL);
 		rl_composite_11.center = true;
 		rl_composite_11.fill = true;
@@ -481,11 +484,31 @@ public class MainView {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				SendData.getInstance().initCOM();
+				if(SendData.getInstance().isInited()){
+					comStateLabel.setText("已连接");
+					comStateLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));
+				} else{
+					comStateLabel.setText("未连接");
+					comStateLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+				}
 			}
 		});
 		formToolkit.adapt(button_1, true, true);
 		button_1.setText("\u8FDE\u63A5\u7AEF\u53E3");
-		Button button_2 = new Button(composite_11, SWT.NONE);
+		
+		Composite composite_2 = new Composite(composite_11, SWT.NONE);
+		composite_2.setLayout(new BoxLayout(BoxLayout.X_AXIS));
+		
+		comStateLabel = new Label(composite_2, SWT.SHADOW_NONE);
+		comStateLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
+		comStateLabel.setText("\u672A\u8FDE\u63A5");
+		
+		Composite composite_14 = new Composite(composite, SWT.NONE);
+		RowLayout rl_composite_14 = new RowLayout(SWT.HORIZONTAL);
+		rl_composite_14.fill = true;
+		rl_composite_14.center = true;
+		composite_14.setLayout(rl_composite_14);
+		Button button_2 = new Button(composite_14, SWT.NONE);
 		button_2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -493,12 +516,6 @@ public class MainView {
 			}
 		});
 		button_2.setText("\u79FB\u52A8\u4F4D\u7F6E");
-		
-		Composite composite_14 = new Composite(composite, SWT.NONE);
-		RowLayout rl_composite_14 = new RowLayout(SWT.HORIZONTAL);
-		rl_composite_14.fill = true;
-		rl_composite_14.center = true;
-		composite_14.setLayout(rl_composite_14);
 		
 		Button button = new Button(composite_14, SWT.NONE);
 		formToolkit.adapt(button, true, true);

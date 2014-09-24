@@ -10,4 +10,11 @@ public class LogUtil {
 		System.out.println(info);
 	}
 	
+	public static void error(Throwable info){
+		info.printStackTrace();
+	}
+	
+	public static void error(String info){
+		System.out.println(info);
+	}
 }

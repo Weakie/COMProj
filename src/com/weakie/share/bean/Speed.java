@@ -55,4 +55,9 @@ public class Speed {
 		return new Speed(Integer.parseInt(values[0].trim()),Integer.parseInt(values[1].trim()),Integer.parseInt(values[2].trim()));
 	}
 
+	@Override
+	public String toString() {
+		return "Speed [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
+
 }

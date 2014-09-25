@@ -144,9 +144,10 @@ public class TabEditView extends Composite {
 		}
 	};
 	private ProgressBar progressBar;
-	private Label lblNewLabel;
+	private Label progressLabel;
 	private Button btnRunAll;
-	private Button btnNewButton;
+	private Button btnRunSelected;
+	private Button checkButton;
 	
 	/**
 	 * Create the composite.
@@ -364,11 +365,15 @@ public class TabEditView extends Composite {
 		composite_17.setLayoutData(BorderLayout.SOUTH);
 		formToolkit.adapt(composite_17);
 		formToolkit.paintBordersFor(composite_17);
-		GridLayout gl_composite_17 = new GridLayout(8, false);
+		GridLayout gl_composite_17 = new GridLayout(5, false);
 		gl_composite_17.marginWidth = 2;
 		gl_composite_17.marginTop = 2;
 		gl_composite_17.marginHeight = 2;
 		composite_17.setLayout(gl_composite_17);
+		
+		checkButton = new Button(composite_17, SWT.CHECK);
+		formToolkit.adapt(checkButton, true, true);
+		checkButton.setText("\u76F8\u5BF9\u539F\u70B9");
 		
 		btnRunAll = new Button(composite_17, SWT.NONE);
 		btnRunAll.addSelectionListener(new SelectionAdapter() {
@@ -379,18 +384,17 @@ public class TabEditView extends Composite {
 				for(ViewProperties vp:data){
 					command.add(vp.createActionCommand(id++));
 				}
-				ActionDispatcherControl.getInstance().executeCommands(command, control, false);
+				ActionDispatcherControl.getInstance().executeCommands(command, control, checkButton.getSelection());
 				LogUtil.info("Run all, new Command list is generated and send!");
 				btnRunAll.setEnabled(false);
-				btnNewButton.setEnabled(false);
+				btnRunSelected.setEnabled(false);
 			}
 		});
-		btnRunAll.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
 		formToolkit.adapt(btnRunAll, true, true);
-		btnRunAll.setText("RUN ALL");
+		btnRunAll.setText("\u8FD0\u884C\u6240\u6709");
 		
-		btnNewButton = new Button(composite_17, SWT.NONE);
-		btnNewButton.addSelectionListener(new SelectionAdapter() {
+		btnRunSelected = new Button(composite_17, SWT.NONE);
+		btnRunSelected.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				List<ActionCommand> command = new ArrayList<ActionCommand>();
@@ -399,39 +403,41 @@ public class TabEditView extends Composite {
 					ViewProperties vp = data.get(i);
 					command.add(vp.createActionCommand(i));
 				}
-				ActionDispatcherControl.getInstance().executeCommands(command, control, false);
+				ActionDispatcherControl.getInstance().executeCommands(command, control, checkButton.getSelection());
 				LogUtil.info("Run selected, new Command list is generated and send!");
 				btnRunAll.setEnabled(false);
-				btnNewButton.setEnabled(false);
+				btnRunSelected.setEnabled(false);
 			}
 		});
-		formToolkit.adapt(btnNewButton, true, true);
-		btnNewButton.setText("RUN\r\n");
+		formToolkit.adapt(btnRunSelected, true, true);
+		btnRunSelected.setText("\u8FD0\u884C\u9009\u4E2D");
 		
-		Button btnNewButton_1 = new Button(composite_17, SWT.NONE);
-		btnNewButton_1.addSelectionListener(new SelectionAdapter() {
+		Button btnCancel = new Button(composite_17, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				control.cancel();
 				LogUtil.info("command task is canceled");
 				btnRunAll.setEnabled(true);
-				btnNewButton.setEnabled(true);
+				btnRunSelected.setEnabled(true);
 			}
 		});
-		formToolkit.adapt(btnNewButton_1, true, true);
-		btnNewButton_1.setText("CANCEL");
-		new Label(composite_17, SWT.NONE);
-		new Label(composite_17, SWT.NONE);
+		formToolkit.adapt(btnCancel, true, true);
+		btnCancel.setText("\u53D6\u6D88");
 		
-		lblNewLabel = new Label(composite_17, SWT.NONE);
-		lblNewLabel.setSize(new Point(20, 50));
-		formToolkit.adapt(lblNewLabel, true, true);
-		lblNewLabel.setText("%");
+		Composite composite = new Composite(composite_17, SWT.NONE);
+		composite.setLayout(new GridLayout(2, false));
+		composite.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
+		formToolkit.adapt(composite);
+		formToolkit.paintBordersFor(composite);
 		
-		progressBar = new ProgressBar(composite_17, SWT.NONE);
-		GridData gd_progressBar = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_progressBar.widthHint = 274;
-		progressBar.setLayoutData(gd_progressBar);
+		progressLabel = new Label(composite, SWT.RIGHT);
+		progressLabel.setAlignment(SWT.RIGHT);
+		progressLabel.setSize(new Point(40, 50));
+		formToolkit.adapt(progressLabel, true, true);
+		progressLabel.setText("100%");
+		
+		progressBar = new ProgressBar(composite, SWT.NONE);
 		formToolkit.adapt(progressBar, true, true);
 		
 		propertiesView = new PropertiesView(composite_15, SWT.NONE);
@@ -483,7 +489,7 @@ public class TabEditView extends Composite {
 			public void run() {
 				progressBar.setMaximum(size);
 				progressBar.setSelection(0);
-				lblNewLabel.setText("0%");
+				progressLabel.setText("0%");
 			}
 		});
 	}
@@ -493,7 +499,7 @@ public class TabEditView extends Composite {
 			@Override
 			public void run() {
 				progressBar.setSelection(finishedSize);
-				lblNewLabel.setText(""+(finishedSize*100/size)+"%");
+				progressLabel.setText(""+(finishedSize*100/size)+"%");
 				TableItem item = table.getItem(id);
 				item.setText(4, "Ok,time(ms)="+time);
 			}
@@ -506,9 +512,9 @@ public class TabEditView extends Composite {
 			@Override
 			public void run() {
 				progressBar.setSelection(progressBar.getMaximum());
-				lblNewLabel.setText("100%");
+				progressLabel.setText("100%");
 				btnRunAll.setEnabled(true);
-				btnNewButton.setEnabled(true);
+				btnRunSelected.setEnabled(true);
 			}
 			
 		});

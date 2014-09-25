@@ -34,6 +34,7 @@ import swing2swt.layout.BoxLayout;
 
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
+import com.weakie.share.control.ActionDispatcherControl;
 import com.weakie.share.jni.SendData;
 import com.weakie.share.util.LogUtil;
 
@@ -52,6 +53,9 @@ public class MainView {
 	private Spinner spinner_sy;
 	private Spinner spinner_sz;
 	private Label comStateLabel;
+	private Button btnX;
+	private Button btnY;
+	private Button btnZ;
 
 	/**
 	 * Launch the application.
@@ -362,13 +366,43 @@ public class MainView {
 			formToolkit.paintBordersFor(spinner_z);
 			
 			Composite composite_1 = new Composite(group_1, SWT.NONE);
-			formToolkit.adapt(composite_1);
-			formToolkit.paintBordersFor(composite_1);
+			composite_1.setLayout(new BoxLayout(BoxLayout.X_AXIS));
 			
 			Button btnCheckButton = new Button(composite_1, SWT.CHECK);
-			btnCheckButton.setBounds(10, 10, 98, 17);
+			btnCheckButton.setToolTipText("\u9009\u4E2D\u5219\u5C06\u5F53\u524D\u70B9\u8BBE\u7F6E\u4E3A\u76F8\u5BF9\u7684\u539F\u70B9\uFF0C\u82E5\u672A\u9009\u4E2D\u5219\u65E0\u6CD5\u4FDD\u8BC1\u76F8\u5BF9\u7684\u539F\u70B9\u7684\u5750\u6807");
+			btnCheckButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					if(btnCheckButton.getSelection()){
+						spinner_x.setEnabled(false);
+						spinner_y.setEnabled(false);
+						spinner_z.setEnabled(false);
+						btnX.setEnabled(false);
+						btnY.setEnabled(false);
+						btnZ.setEnabled(false);
+						lblX.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+						lblY.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+						lblZ.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
+						//update the basePoint in the ActionDispatcherControl
+						ActionDispatcherControl.getInstance().setBasePoint(
+								spinner_x.getSelection(),
+								spinner_y.getSelection(),
+								spinner_z.getSelection());
+					}else{
+						spinner_x.setEnabled(true);
+						spinner_y.setEnabled(true);
+						spinner_z.setEnabled(true);
+						btnX.setEnabled(true);
+						btnY.setEnabled(true);
+						btnZ.setEnabled(true);
+						lblX.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+						lblY.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+						lblZ.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
+					}
+				}
+			});
 			formToolkit.adapt(btnCheckButton, true, true);
-			btnCheckButton.setText("Check Button");
+			btnCheckButton.setText("\u9501\u5B9A\u4E3A\u539F\u70B9");
 		}
 		{
 			ExpandableComposite expandableComposite = formToolkit.createExpandableComposite(composite, ExpandableComposite.TWISTIE);
@@ -414,7 +448,7 @@ public class MainView {
 			formToolkit.adapt(spinner_dx);
 			formToolkit.paintBordersFor(spinner_dx);
 			
-			Button btnX = new Button(composite_16, SWT.NONE);
+			btnX = new Button(composite_16, SWT.NONE);
 			btnX.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -443,7 +477,7 @@ public class MainView {
 			formToolkit.adapt(spinner_dy);
 			formToolkit.paintBordersFor(spinner_dy);
 			
-			Button btnY = new Button(composite_17, SWT.NONE);
+			btnY = new Button(composite_17, SWT.NONE);
 			btnY.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -471,7 +505,7 @@ public class MainView {
 			formToolkit.adapt(spinner_dz);
 			formToolkit.paintBordersFor(spinner_dz);
 			
-			Button btnZ = new Button(composite_18, SWT.NONE);
+			btnZ = new Button(composite_18, SWT.NONE);
 			btnZ.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -586,8 +620,8 @@ public class MainView {
 			int sy = this.spinner_sy.getSelection();
 			int sz = this.spinner_sz.getSelection();
 			LogUtil.info("Move to Point:("+x+","+y+","+z+"), Speed:("+sx+","+sy+","+sz+")");
-			//SendData.getInstance().formateData(new Point3D(x, y, z), new Speed(sx, sy, sz), buf);
-			//SendData.getInstance().sendData(buf);
+			SendData.getInstance().formateData(new Point3D(x, y, z), new Speed(sx, sy, sz), buf);
+			SendData.getInstance().sendData(buf);
 			LogUtil.info(this.generateFormatedData(buf));
 		}catch(Exception e2){
 			LogUtil.error(e2);

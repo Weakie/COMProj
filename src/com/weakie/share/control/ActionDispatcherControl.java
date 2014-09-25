@@ -28,8 +28,8 @@ public class ActionDispatcherControl {
 		this.taskExecutor = Executors.newSingleThreadScheduledExecutor();
 	}
 
-	public synchronized void setBasePoint(Point3D basePoint){
-		this.basePoint = basePoint;
+	public synchronized void setBasePoint(int x,int y,int z){
+		this.basePoint.setData(x, y, z);
 	}
 	
 	public synchronized void executeCommands(List<ActionCommand> commandList,
@@ -93,9 +93,9 @@ public class ActionDispatcherControl {
 				}
 				
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				LogUtil.error(e);
 			} catch (Throwable a){
-				a.printStackTrace();
+				LogUtil.error(a);
 			} finally {
 				this.control.close();
 			}

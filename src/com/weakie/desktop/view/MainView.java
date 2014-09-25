@@ -53,9 +53,12 @@ public class MainView {
 	private Spinner spinner_sy;
 	private Spinner spinner_sz;
 	private Label comStateLabel;
-	private Button btnX;
-	private Button btnY;
-	private Button btnZ;
+	private Button btnX_p;
+	private Button btnY_p;
+	private Button btnZ_p;
+	private Button btnX_m;
+	private Button btnY_m;
+	private Button btnZ_m;
 
 	/**
 	 * Launch the application.
@@ -374,12 +377,7 @@ public class MainView {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					if(btnCheckButton.getSelection()){
-						spinner_x.setEnabled(false);
-						spinner_y.setEnabled(false);
-						spinner_z.setEnabled(false);
-						btnX.setEnabled(false);
-						btnY.setEnabled(false);
-						btnZ.setEnabled(false);
+						this.setOriginPointWidgetsState(false);
 						lblX.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 						lblY.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
 						lblZ.setBackground(SWTResourceManager.getColor(SWT.COLOR_RED));
@@ -389,16 +387,23 @@ public class MainView {
 								spinner_y.getSelection(),
 								spinner_z.getSelection());
 					}else{
-						spinner_x.setEnabled(true);
-						spinner_y.setEnabled(true);
-						spinner_z.setEnabled(true);
-						btnX.setEnabled(true);
-						btnY.setEnabled(true);
-						btnZ.setEnabled(true);
+						this.setOriginPointWidgetsState(true);
 						lblX.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 						lblY.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 						lblZ.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 					}
+				}
+				
+				private void setOriginPointWidgetsState(boolean flag){
+					btnX_p.setEnabled(flag);
+					btnY_p.setEnabled(flag);
+					btnZ_p.setEnabled(flag);
+					btnX_m.setEnabled(flag);
+					btnY_m.setEnabled(flag);
+					btnZ_m.setEnabled(flag);
+					spinner_x.setEnabled(flag);
+					spinner_y.setEnabled(flag);
+					spinner_z.setEnabled(flag);
 				}
 			});
 			formToolkit.adapt(btnCheckButton, true, true);
@@ -435,9 +440,24 @@ public class MainView {
 			group_3.setLayout(rl_group_3);
 			
 			Composite composite_16 = new Composite(group_3, SWT.NONE);
-			GridLayout gl_composite_16 = new GridLayout(2, false);
+			GridLayout gl_composite_16 = new GridLayout(3, false);
 			gl_composite_16.marginHeight = 2;
 			composite_16.setLayout(gl_composite_16);
+			
+			btnX_m = new Button(composite_16, SWT.NONE);
+			btnX_m.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					int x = MainView.this.spinner_x.getSelection();
+					int dx = MainView.this.spinner_dx.getSelection();
+					MainView.this.spinner_x.setSelection(x-dx);
+					LogUtil.info("Relatively move in x direction: x="+x+", dx="+dx);
+					MainView.this.moveToPoint();
+				}
+			});
+			btnX_m.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			formToolkit.adapt(btnX_m, true, true);
+			btnX_m.setText("-");
 			
 			spinner_dx = new Spinner(composite_16, SWT.BORDER);
 			spinner_dx.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -448,8 +468,8 @@ public class MainView {
 			formToolkit.adapt(spinner_dx);
 			formToolkit.paintBordersFor(spinner_dx);
 			
-			btnX = new Button(composite_16, SWT.NONE);
-			btnX.addSelectionListener(new SelectionAdapter() {
+			btnX_p = new Button(composite_16, SWT.NONE);
+			btnX_p.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int x = MainView.this.spinner_x.getSelection();
@@ -459,14 +479,29 @@ public class MainView {
 					MainView.this.moveToPoint();
 				}
 			});
-			btnX.setFont(SWTResourceManager.getFont("Î¢ÈíÑÅºÚ", 9, SWT.NORMAL));
-			formToolkit.adapt(btnX, true, true);
-			btnX.setText("X\u79FB\u52A8");
+			btnX_p.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			formToolkit.adapt(btnX_p, true, true);
+			btnX_p.setText("+");
 			
 			Composite composite_17 = new Composite(group_3, SWT.NONE);
-			GridLayout gl_composite_17 = new GridLayout(2, false);
+			GridLayout gl_composite_17 = new GridLayout(3, false);
 			gl_composite_17.marginHeight = 2;
 			composite_17.setLayout(gl_composite_17);
+			
+			btnY_m = new Button(composite_17, SWT.NONE);
+			btnY_m.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					int y = MainView.this.spinner_y.getSelection();
+					int dy = MainView.this.spinner_dy.getSelection();
+					MainView.this.spinner_y.setSelection(y-dy);
+					LogUtil.info("Relatively move in y direction: y="+y+", dy="+dy);
+					MainView.this.moveToPoint();
+				}
+			});
+			btnY_m.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			formToolkit.adapt(btnY_m, true, true);
+			btnY_m.setText("-");
 			
 			spinner_dy = new Spinner(composite_17, SWT.BORDER);
 			spinner_dy.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -477,8 +512,9 @@ public class MainView {
 			formToolkit.adapt(spinner_dy);
 			formToolkit.paintBordersFor(spinner_dy);
 			
-			btnY = new Button(composite_17, SWT.NONE);
-			btnY.addSelectionListener(new SelectionAdapter() {
+			btnY_p = new Button(composite_17, SWT.NONE);
+			btnY_p.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			btnY_p.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int y = MainView.this.spinner_y.getSelection();
@@ -488,13 +524,28 @@ public class MainView {
 					MainView.this.moveToPoint();
 				}
 			});
-			formToolkit.adapt(btnY, true, true);
-			btnY.setText("Y\u79FB\u52A8");
+			formToolkit.adapt(btnY_p, true, true);
+			btnY_p.setText("+");
 			
 			Composite composite_18 = new Composite(group_3, SWT.NONE);
-			GridLayout gl_composite_18 = new GridLayout(2, false);
+			GridLayout gl_composite_18 = new GridLayout(3, false);
 			gl_composite_18.marginHeight = 2;
 			composite_18.setLayout(gl_composite_18);
+			
+			btnZ_m = new Button(composite_18, SWT.NONE);
+			btnZ_m.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					int z = MainView.this.spinner_z.getSelection();
+					int dz = MainView.this.spinner_dz.getSelection();
+					MainView.this.spinner_z.setSelection(z+dz);
+					LogUtil.info("Relatively move in z direction: z="+z+", dz="+dz);
+					MainView.this.moveToPoint();
+				}
+			});
+			btnZ_m.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			formToolkit.adapt(btnZ_m, true, true);
+			btnZ_m.setText("-");
 			
 			spinner_dz = new Spinner(composite_18, SWT.BORDER);
 			spinner_dz.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false, 1, 1));
@@ -505,8 +556,9 @@ public class MainView {
 			formToolkit.adapt(spinner_dz);
 			formToolkit.paintBordersFor(spinner_dz);
 			
-			btnZ = new Button(composite_18, SWT.NONE);
-			btnZ.addSelectionListener(new SelectionAdapter() {
+			btnZ_p = new Button(composite_18, SWT.NONE);
+			btnZ_p.setFont(SWTResourceManager.getFont("Courier New", 9, SWT.NORMAL));
+			btnZ_p.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					int z = MainView.this.spinner_z.getSelection();
@@ -516,8 +568,8 @@ public class MainView {
 					MainView.this.moveToPoint();
 				}
 			});
-			formToolkit.adapt(btnZ, true, true);
-			btnZ.setText("Z\u79FB\u52A8");
+			formToolkit.adapt(btnZ_p, true, true);
+			btnZ_p.setText("+");
 		}
 		
 		Composite composite_11 = new Composite(composite, SWT.NONE);

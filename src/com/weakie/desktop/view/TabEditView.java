@@ -101,7 +101,7 @@ public class TabEditView extends Composite {
 		
 		@Override
 		public void update(int id, String value) {
-			LogUtil.info("begin:"+id+",value:"+value);
+			LogUtil.info("Run:"+id+",value:"+value);
 		}
 		
 		@Override
@@ -372,6 +372,7 @@ public class TabEditView extends Composite {
 		composite_17.setLayout(gl_composite_17);
 		
 		checkButton = new Button(composite_17, SWT.CHECK);
+		checkButton.setSelection(true);
 		formToolkit.adapt(checkButton, true, true);
 		checkButton.setText("\u76F8\u5BF9\u539F\u70B9");
 		

@@ -87,7 +87,7 @@ public class ActionDispatcherControl {
 						timeFlag = System.currentTimeMillis();
 						
 						//update UI of command state
-						this.control.update(ac.getId(), b.getPoint()+"  "+b.getSpeed()+" "+sleeptime+" "+b.getTime());
+						this.control.update(ac.getId(), "Size="+gen.getSize()+" "+b.getPoint()+" "+b.getSpeed()+" "+sleeptime+" "+b.getTime());
 					}
 					
 					this.control.end(ac.getId());

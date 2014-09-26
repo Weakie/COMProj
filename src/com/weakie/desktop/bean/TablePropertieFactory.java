@@ -4,7 +4,6 @@ import com.weakie.desktop.bean.propertie.DefaultViewProperties;
 import com.weakie.desktop.bean.propertie.DirectMoveViewProperties;
 import com.weakie.desktop.bean.propertie.SnakeMoveViewProperties;
 import com.weakie.desktop.bean.propertie.ViewProperties;
-import com.weakie.share.control.gen.impl.DefaultActionGenerator;
 import com.weakie.share.control.gen.impl.DirectMoveActionGenerator;
 import com.weakie.share.control.gen.impl.SnakeMoveActionGenerator;
 

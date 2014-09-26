@@ -91,7 +91,7 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 			Point3D targetPoint = new Point3D(xx,yy,zz);
 			int sx = (targetPoint.getX()-this.prevPoint.getX())*1000/stepTime;
 			int sy = (targetPoint.getY()-this.prevPoint.getY())*1000/stepTime;
-			int sz = z*1000/stepTime;
+			int sz = (targetPoint.getZ()-this.prevPoint.getZ())*1000/stepTime;
 			Speed targetSpeed = new Speed(
 							Math.abs(sx),
 							Math.abs(sy),

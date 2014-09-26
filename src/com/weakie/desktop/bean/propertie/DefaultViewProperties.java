@@ -29,7 +29,7 @@ public class DefaultViewProperties extends AbstractViewProperties {
 	}
 
 	@Override
-	protected Map<String, String> getExtenerParam() {
+	protected Map<String, Object> getExtenerParam() {
 		return Collections.emptyMap();
 	}
 

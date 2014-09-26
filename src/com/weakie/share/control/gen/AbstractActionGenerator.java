@@ -7,11 +7,6 @@ import com.weakie.share.bean.Speed;
 
 
 public abstract class AbstractActionGenerator implements Iterable<ActionBean> {
-
-	public static final String PARAM_BEGIN = "beginPoint";
-	public static final String PARAM_END = "endPoint";
-	public static final String PARAM_TIME = "totalTime";
-	public static final String PARAM_SPEED = "speed";
 	
 	protected Point3D beginPoint;
 	protected Point3D endPoint;

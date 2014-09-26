@@ -12,6 +12,7 @@ public abstract class AbstractViewProperties implements ViewProperties{
 
 	protected Map<String,String> param = new HashMap<String, String>();
 	
+	//this Parameter is only used for show properties in view
 	protected static final String PARAM_BEGINPOINT = "BeginPoint";
 	protected static final String PARAM_ENDPOINT = "EndPoint";
 	protected static final String PARAM_SPEED = "Speed";
@@ -19,6 +20,7 @@ public abstract class AbstractViewProperties implements ViewProperties{
 	protected static final String PARAM_TYPE = "Type";
 	protected static final String PARAM_COMMENT = "Comment";
 	
+	//Define the order of properties shows in view
 	private static final String[] keys = new String[]{
 			PARAM_BEGINPOINT,
 			PARAM_ENDPOINT,
@@ -65,10 +67,11 @@ public abstract class AbstractViewProperties implements ViewProperties{
 	}
 
 	@Override
-	public ActionCommand createActionCommand(int id) {
+	public final ActionCommand createActionCommand(int id) {
 		Point3D beginPoint = null;;
 		Point3D endPoint = null;
 		Speed speed = null;
+		long time = 0;
 		
 		try {
 			beginPoint = Point3D.parsePoint3D(param.get(keys[0]));
@@ -82,7 +85,10 @@ public abstract class AbstractViewProperties implements ViewProperties{
 			speed = Speed.parseSpeed(param.get(keys[2]));
 		} catch (Exception e1) {}
 		
-		long time = Long.parseLong(param.get(keys[3]));
+		try{
+			time = Long.parseLong(param.get(keys[3]));
+		} catch (Exception e1) {}
+		
 		ActionCommand ac = new ActionCommand(
 				id,
 				beginPoint,
@@ -91,11 +97,11 @@ public abstract class AbstractViewProperties implements ViewProperties{
 				time,
 				param.get(keys[4]), 
 				param.get(keys[5]));
-		for (Entry<String, String> e : this.getExtenerParam().entrySet()) {
+		for (Entry<String, Object> e : this.getExtenerParam().entrySet()) {
 			ac.addParameter(e.getKey(), e.getValue());
 		}
 		return ac;
 	}
 
-	protected abstract Map<String,String> getExtenerParam();
+	protected abstract Map<String,Object> getExtenerParam();
 }

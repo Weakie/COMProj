@@ -10,6 +10,7 @@ import com.weakie.share.control.gen.ActionGeneratorProducer;
 
 /**
  * Attention: current point must be same with the begin point!
+ * Need Parameter: beginPoint,endPoint,totalTime
  * @author weakie E-mail:weakielin@gmail.com
  */
 public class DefaultActionGenerator extends AbstractActionGenerator {

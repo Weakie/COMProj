@@ -19,6 +19,9 @@ public class ActionGeneratorProducer {
 		try {
 			reader = new BufferedReader(new FileReader("algorithm.properties"));
 			while ((algorotmClassName = reader.readLine()) != null) {
+				if(algorotmClassName.charAt(0) == '#'){
+					continue;
+				}
 				try {
 					Class.forName(algorotmClassName);
 				} catch (ClassNotFoundException e) {

@@ -82,11 +82,12 @@ public class ActionDispatcherControl {
 						SendData.getInstance().sendData(buf);
 						
 						//control time to sleep, avoid the influence of calculate time 
-						Thread.sleep(Math.max(b.getTime()+(timeFlag-System.currentTimeMillis()),0));
+						long sleeptime = b.getTime()+(timeFlag-System.currentTimeMillis());
+						Thread.sleep(Math.max(sleeptime,0));
 						timeFlag = System.currentTimeMillis();
 						
 						//update UI of command state
-						this.control.update(ac.getId(), b.getPoint()+"");
+						this.control.update(ac.getId(), b.getPoint()+"  "+b.getSpeed()+" "+sleeptime+" "+b.getTime());
 					}
 					
 					this.control.end(ac.getId());

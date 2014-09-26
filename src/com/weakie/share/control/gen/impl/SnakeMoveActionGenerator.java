@@ -25,7 +25,7 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 	public static final String PARAM_PHASE = "phase";
 	public static final String PARAM_PERIOD = "period";
 	
-	private static final int[] AMP = new int[]{0,1,0,-1};
+	private static final int[] AMP = new int[]{1,-1};
 	
 	//Obtained parameter
 	private int amplitude;
@@ -42,11 +42,11 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 	public SnakeMoveActionGenerator() {}
 
 	private void initialize(){
-		int dx = Math.abs(beginPoint.getX()-endPoint.getX());
-		int dy = Math.abs(beginPoint.getY()-endPoint.getY());
+		long dx = Math.abs(beginPoint.getX()-endPoint.getX());
+		long dy = Math.abs(beginPoint.getY()-endPoint.getY());
 		this.lengthOfTotal = (int) Math.sqrt(dx*dx+dy*dy);
 		this.lengthOfZ = endPoint.getZ() - beginPoint.getZ();
-		this.stepTime = period/4;
+		this.stepTime = period/AMP.length;
 		this.sin = ((double)(endPoint.getY()-beginPoint.getY()))/lengthOfTotal;
 		this.cos = ((double)(endPoint.getX()-beginPoint.getX()))/lengthOfTotal;
 	}
@@ -78,8 +78,8 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 			this.index++;
 			
 			//calculate position
-			int x = this.index*phase/4;
-			int y = AMP[this.index%4]*amplitude;
+			int x = this.index*phase/AMP.length;
+			int y = AMP[this.index%AMP.length]*amplitude;
 			int z = lengthOfZ*this.index/this.maxIndex;
 			
 			//Translate x,y
@@ -107,7 +107,7 @@ public class SnakeMoveActionGenerator extends AbstractActionGenerator {
 
 	@Override
 	public int getSize() {
-		return this.lengthOfTotal*4/this.phase;
+		return AMP.length*this.lengthOfTotal/this.phase;
 	}
 
 	@Override

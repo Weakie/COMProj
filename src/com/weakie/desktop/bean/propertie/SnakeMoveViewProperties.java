@@ -26,9 +26,9 @@ public class SnakeMoveViewProperties extends AbstractViewProperties {
 	public SnakeMoveViewProperties() {
 		param.put(PARAM_SPEED, "not need");
 		param.put(PARAM_TIME, "not need");
-		param.put(PARAM_AMPLITUDE, "200");
-		param.put(PARAM_PHASE, "800");
-		param.put(PARAM_PERIOD, "2000");
+		param.put(PARAM_AMPLITUDE, "400");
+		param.put(PARAM_PHASE, "1600");
+		param.put(PARAM_PERIOD, "1000");
 	}
 
 	@Override

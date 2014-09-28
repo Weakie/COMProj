@@ -59,6 +59,7 @@ public class MainView {
 	private Button btnX_m;
 	private Button btnY_m;
 	private Button btnZ_m;
+	private Combo comPort;
 
 	/**
 	 * Launch the application.
@@ -154,12 +155,12 @@ public class MainView {
 			Label label = new Label(composite_4, SWT.NONE);
 			label.setText("\u7AEF\u53E3\u53F7");
 			
-			Combo combo = new Combo(composite_4, SWT.NONE);
-			combo.setItems(new String[] {"1", "2", "3", "4"});
-			combo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
-			formToolkit.adapt(combo);
-			formToolkit.paintBordersFor(combo);
-			combo.select(0);
+			comPort = new Combo(composite_4, SWT.NONE);
+			comPort.setItems(new String[] {"com1", "com2", "com3", "com4", "com5", "com6", "com7", "com8", "com9"});
+			comPort.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+			formToolkit.adapt(comPort);
+			formToolkit.paintBordersFor(comPort);
+			comPort.select(0);
 			
 			Composite composite_5 = new Composite(group, SWT.NONE);
 			GridLayout gl_composite_5 = new GridLayout(2, false);
@@ -584,7 +585,9 @@ public class MainView {
 		button_1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				SendData.getInstance().initCOM();
+				String port = comPort.getText();
+				LogUtil.info("Connetc to com port: "+port);
+				SendData.getInstance().initCOM(port);
 				if(SendData.getInstance().isInited()){
 					comStateLabel.setText("ÒÑÁ¬½Ó");
 					comStateLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_GREEN));

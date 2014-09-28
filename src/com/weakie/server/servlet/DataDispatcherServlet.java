@@ -61,7 +61,7 @@ public class DataDispatcherServlet extends HttpServlet {
 			Point3D point = data.buildPoint3DObject();
 			byte[] buf = new byte[32];
 
-			SendData.getInstance().initCOM();
+			SendData.getInstance().initCOM("com6");
 			SendData.getInstance().formateData(point, speed, buf);
 			SendData.getInstance().sendData(buf);
 		} catch (Exception e) {

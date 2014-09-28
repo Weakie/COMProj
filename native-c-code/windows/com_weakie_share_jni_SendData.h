@@ -13,7 +13,7 @@ extern "C" {
  * Signature: (Lcom/weakie/share/jni/SendData/PtrData;)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
-  (JNIEnv *, jclass, jobject);
+  (JNIEnv *, jclass, jobject, jstring port);
 
 /*
  * Class:     com_weakie_share_jni_SendData

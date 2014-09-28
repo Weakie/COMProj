@@ -21,7 +21,7 @@ public class SnakeMoveActionGeneratorTest {
 		extener.put(SnakeMoveActionGenerator.PARAM_PHASE, phase);
 		
 		SnakeMoveActionGenerator gen = new SnakeMoveActionGenerator();
-		gen.initBaseParam(new Point3D(0,0,100), new Point3D(0,8000,120), null, 0);
+		gen.initBaseParam(new Point3D(1000,100,100), new Point3D(-8000,100,120), null, 0);
 		gen.setParameter(extener);
 		
 		System.out.println(gen.getSize());

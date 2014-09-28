@@ -2,16 +2,22 @@
 #include "SendData.h"
 
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
-(JNIEnv *env, jclass cls, jobject obj){
+(JNIEnv *env, jclass cls, jobject obj,jstring port){
 	//get fieldId
 	jclass ptrCls = env->GetObjectClass(obj);
 	jfieldID pHComFid = env->GetFieldID(ptrCls,"pHCom","J");
 	jfieldID pWrOverlandFid = env->GetFieldID(ptrCls,"pWrOverland","J");
 
+	const char* str;
+	str = env->GetStringUTFChars(port,NULL);
+	if(str == NULL){
+		return false;
+	}
 	//initCom
 	HANDLE* g_hCom = new HANDLE();
 	OVERLAPPED* g_wrOverland = new OVERLAPPED();
-	bool result = InitCom(*g_hCom,*g_wrOverland);
+	bool result = InitCom(*g_hCom,*g_wrOverland,str);
+	env->ReleaseStringUTFChars(port,str);
 
 	//convert the ptr to long value
 	long long g_hComResult = (long long)g_hCom;

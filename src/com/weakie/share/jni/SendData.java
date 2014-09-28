@@ -21,12 +21,12 @@ public class SendData {
 		return this.ptrHandler.isInited();
 	}
 	
-	public synchronized void initCOM(){
+	public synchronized void initCOM(String port){
 		if(this.ptrHandler.isInited()){
 			LogUtil.info("COM is already initialized");
 			return;
 		}
-		SendData.initCOM(ptrHandler);
+		SendData.initCOM(ptrHandler,port);
 		this.ptrHandler.setInited(true);
 	}
 	
@@ -75,7 +75,7 @@ public class SendData {
 		System.loadLibrary("SendData");
 	}
 	
-	private static native boolean initCOM(PtrData dataHandler);
+	private static native boolean initCOM(PtrData dataHandler,String port);
 
 	private static native boolean sendData(PtrData dataHandler,byte[] buffer);
 	

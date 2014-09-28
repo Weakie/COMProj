@@ -29,7 +29,7 @@ struct Speed
 
 };
 
-bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped);
+bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped,const char* port);
 
 bool SendData(HANDLE& m_hCom, OVERLAPPED& wrOverlapped, char* buffer, int bufferSize);
 
@@ -39,11 +39,11 @@ double MoveTime(Point3i start, Point3i end, Speed sp, double delay = 0);
 
 #endif
 
-bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped)
+bool InitCom(HANDLE& m_hCom, OVERLAPPED& wrOverlapped,const char* port)
 {
 	//第一步，打开串口
 	//HANDLE m_hCom;
-	m_hCom = CreateFile((WCHAR*)_T("com6"), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
+	m_hCom = CreateFile((WCHAR*)_T(port), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 	if (m_hCom == INVALID_HANDLE_VALUE)
 	{
 		std::cout << "CreateFile fail!" << endl;

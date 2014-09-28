@@ -11,6 +11,7 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 	const char* str;
 	str = env->GetStringUTFChars(port,NULL);
 	if(str == NULL){
+		cout << "JNI data transform fail in initCOM." << endl;
 		return false;
 	}
 	//initCom

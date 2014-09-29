@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project name="COM_Share" default="build" basedir=".">
+	<!-- Sets variables which can later be used. -->
+	<!-- The value of a property is accessed via ${} -->
+	<property name="src.dir" location="src" />
+	<property name="lib.dir" location="lib" />
+	<property name="build.dir" location="build/classes" />
+	<property name="dist.dir" location="dist" />
+
+	<property name="jar-file-name" value="com.weakie.share.lib_v1.0.jar" />
+
+	<!-- other info -->
+	<property name="builder" value="Weakie,lin" />
+	<tstamp prefix="build-info">
+		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
+		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
+	</tstamp>
+
+	<!-- Create a classpath container which can be later used in the ant task -->
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Deletes the existing build, docs and dist directory-->
+	<target name="clean">
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- Creates the  build, docs and dist directory-->
+	<target name="makedir">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- Compiles the java code (including the usage of library for JUnit -->
+	<target name="compile" depends="clean, makedir">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeantruntime="on" />
+	</target>
+
+	<!--Creates the deployable jar file  -->
+	<target name="build" depends="compile">
+		<echo message="Package the share project to jar file." />
+		<jar destfile="${dist.dir}/${jar-file-name}">
+			<fileset dir="${build.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+			<manifest>
+				<attribute name="Built-By" value="${builder}" />
+				<attribute name="Built-On" value="${build-info.current-date}" />
+				<attribute name="Built-At" value="${build-info.current-time}" />
+			</manifest>
+		</jar>
+		<echo message="Finish to package the project into jar file." />
+	</target>
+
+</project>

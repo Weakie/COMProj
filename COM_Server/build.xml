@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<project name="COM_Server" default="build" basedir=".">
+	<!-- Sets variables which can later be used. -->
+	<!-- The value of a property is accessed via ${} -->
+	<property name="src.dir" location="src" />
+	<property name="lib.dir" location="WebContent/WEB-INF/lib" />
+	<property name="lib.share.dir" location="../com_share/dist" />
+	<!--<property name="config.dir" location="config" />-->
+	<!--<property name="spring.dir" location="config/spring-beans" />-->
+	<property name="build.dir" location="build/classes" />
+	<property name="dist.dir" location="dist" />
+	
+	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
+	<property name="war-file-name" value="COMProj.war" />
+
+	<property name="tomcat.dir" value="D:\\Program Files (x86)\\tomcat 6\\apache-tomcat-6.0.37"/>
+	<!-- other info -->
+	<property name="builder" value="Weakie" />
+	<tstamp prefix="build-info">
+		<format property="current-date" pattern="d-MMMM-yyyy" locale="en" />
+		<format property="current-time" pattern="hh:mm:ss a z" locale="en" />
+	</tstamp>
+
+	<!-- Create a classpath container which can be later used in the ant task -->
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${lib.share.dir}">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${tomcat.dir}/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<!-- Deletes the existing build, docs and dist directory-->
+	<target name="clean">
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- Creates the  build, docs and dist directory-->
+	<target name="makedir">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- Compiles the java code (including the usage of library for JUnit -->
+	<target name="compile" depends="clean, makedir">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeantruntime="on" />
+	</target>
+
+	<!--Creates the deployable war file  -->
+	<target name="build" depends="compile">
+		<echo message="Package the Web project into war deploy file." />
+		<war destfile="${dist.dir}/${war-file-name}" webxml="${web-xml-file}">
+			<fileset dir="WebContent">
+				<include name="**/*.*" />
+				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
+				<exclude name="WEB-INF/web.xml" />
+			</fileset>
+			<classes dir="${build.dir}" />
+			<manifest>
+				<attribute name="Built-By" value="${builder}" />
+				<attribute name="Built-On" value="${build-info.current-date}" />
+				<attribute name="Built-At" value="${build-info.current-time}" />
+			</manifest>
+		</war>
+		<echo message="Finish to package the Web project war file." />
+	</target>
+
+</project>

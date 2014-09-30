@@ -37,6 +37,7 @@
 
 	<!-- Compiles the java code (including the usage of library for JUnit -->
 	<target name="compile" depends="clean, makedir">
+		<copy file="${src.dir}/algorithm.properties" todir="${build.dir}" overwrite="true" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" includeantruntime="on" />
 	</target>
 

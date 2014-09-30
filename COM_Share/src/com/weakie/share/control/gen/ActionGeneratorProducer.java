@@ -1,13 +1,15 @@
 package com.weakie.share.control.gen;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.weakie.share.control.bean.ActionCommand;
+import com.weakie.share.util.LogUtil;
 
 public class ActionGeneratorProducer {
 
@@ -17,7 +19,8 @@ public class ActionGeneratorProducer {
 		String algorotmClassName = null;
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader("algorithm.properties"));
+			InputStream in = ActionGeneratorProducer.class.getResourceAsStream("/algorithm.properties");
+			reader = new BufferedReader(new InputStreamReader(in));
 			while ((algorotmClassName = reader.readLine()) != null) {
 				if(algorotmClassName.charAt(0) == '#'){
 					continue;
@@ -25,17 +28,17 @@ public class ActionGeneratorProducer {
 				try {
 					Class.forName(algorotmClassName);
 				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
+					LogUtil.error(e);
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogUtil.error(e);
 		} finally{
 			if(reader != null){
 				try {
 					reader.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					LogUtil.error(e);
 				}
 			}
 		}
@@ -61,7 +64,7 @@ public class ActionGeneratorProducer {
 					command.getTime());
 			gen.setParameter(command.getParameter());
 		} catch (Exception e) {
-			e.printStackTrace();
+			LogUtil.error(e);
 		} 
 		return gen;
 	}

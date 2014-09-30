@@ -8,8 +8,9 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 	jfieldID pHComFid = env->GetFieldID(ptrCls,"pHCom","J");
 	jfieldID pWrOverlandFid = env->GetFieldID(ptrCls,"pWrOverland","J");
 
-	const char* str;
-	str = env->GetStringUTFChars(port,NULL);
+	const jchar* str;
+	//str = env->GetStringUTFChars(port,NULL);
+	str = env->GetStringChars(port,NULL);
 	if(str == NULL){
 		cout << "JNI data transform fail in initCOM." << endl;
 		return false;
@@ -17,8 +18,9 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 	//initCom
 	HANDLE* g_hCom = new HANDLE();
 	OVERLAPPED* g_wrOverland = new OVERLAPPED();
-	bool result = InitCom(*g_hCom,*g_wrOverland,str);
-	env->ReleaseStringUTFChars(port,str);
+	bool result = InitCom(*g_hCom,*g_wrOverland,(const TCHAR*)str);
+	//env->ReleaseStringUTFChars(port,str);
+	env->ReleaseStringChars(port, str);
 
 	//convert the ptr to long value
 	long long g_hComResult = (long long)g_hCom;

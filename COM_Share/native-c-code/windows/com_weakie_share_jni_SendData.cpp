@@ -85,12 +85,12 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
 }
 
 JNIEXPORT void JNICALL Java_com_weakie_share_jni_SendData_formatData
-(JNIEnv * env, jclass cls, jint x, jint y, jint z, jint sx, jint sy, jint sz, jbyteArray buffer){
+(JNIEnv * env, jclass cls, jint x, jint y, jint z, jint sx, jint sy, jint sz, jint flag, jbyteArray buffer){
 	Speed speed(sx,sy,sz);
 	Point3i point(x,y,z);
 
 	char buf[32];
-	FormateData(point,speed,buf);
+	FormateData(point,speed,buf,flag);
 	jbyte b[32];
 	for(int i=0;i<32;i++){
 		b[i] = buf[i];

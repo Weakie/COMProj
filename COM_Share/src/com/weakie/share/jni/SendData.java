@@ -5,6 +5,9 @@ import com.weakie.share.bean.Speed;
 import com.weakie.share.util.LogUtil;
 
 public class SendData {
+	public static final int ABSOLUTE_POSITION = 1;
+	public static final int RELATIVE_POSITION = 3;
+	public static final int START_WELD = 5;
 
 	private PtrData ptrHandler;
 	private static SendData instance = new SendData();
@@ -46,13 +49,21 @@ public class SendData {
 		}
 		SendData.destroy(ptrHandler);
 		this.ptrHandler.setInited(false);
+		
 	}
 	
 	public void formateData(Point3D p,Speed s,byte[] buf){
 		if(buf==null || buf.length<32){
-			LogUtil.info("please init buf first");
+			LogUtil.info("please init buf first!");
 		}
-		SendData.formatData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), buf);
+		SendData.formatData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), ABSOLUTE_POSITION, buf);
+	}
+	
+	public void formateData(Point3D p,Speed s,int flag,byte[] buf){
+		if(buf==null || buf.length<32){
+			LogUtil.info("please init buf first!");
+		}
+		SendData.formatData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), flag, buf);
 	}
 	
 	private static class PtrData {
@@ -82,5 +93,5 @@ public class SendData {
 	
 	private static native boolean destroy(PtrData dataHandler);
 	
-	private static native void formatData(int x,int y,int z,int sx,int sy,int sz,byte[] buffer);
+	private static native void formatData(int x,int y,int z,int sx,int sy,int sz,int flag,byte[] buffer);
 }

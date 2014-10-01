@@ -11,7 +11,7 @@
 using namespace std;
 
 
-enum ControlFlag{ ABSOLUTE_POSITION = 1, RELATIVE_POSITION = 3 };
+enum ControlFlag{ ABSOLUTE_POSITION = 1, RELATIVE_POSITION = 3, START_WELD = 5 };
 
 struct Point3i
 {

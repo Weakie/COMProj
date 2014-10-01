@@ -37,7 +37,7 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
  * Signature: (IIIIII[B)V
  */
 JNIEXPORT void JNICALL Java_com_weakie_share_jni_SendData_formatData
-  (JNIEnv *, jclass, jint, jint, jint, jint, jint, jint, jbyteArray);
+  (JNIEnv *, jclass, jint, jint, jint, jint, jint, jint, jint, jbyteArray);
 
 #ifdef __cplusplus
 }

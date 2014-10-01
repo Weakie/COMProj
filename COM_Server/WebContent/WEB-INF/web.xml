@@ -19,4 +19,14 @@
     <servlet-name>DataDispatcherServlet</servlet-name>
     <url-pattern>/DataDispatcherServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DataSaveServlet</display-name>
+    <servlet-name>DataSaveServlet</servlet-name>
+    <servlet-class>com.weakie.server.servlet.DataSaveServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DataSaveServlet</servlet-name>
+    <url-pattern>/DataSaveServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

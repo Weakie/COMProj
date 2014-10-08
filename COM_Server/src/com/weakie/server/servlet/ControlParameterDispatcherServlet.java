@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.weakie.server.bean.JsonData;
+import com.weakie.share.bean.ControlParameter;
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
 import com.weakie.share.jni.SendData;
 
 /**
- * Servlet implementation class DataDispatcherServlet
+ * Servlet implementation class ControlParameterDispatcherServlet
  */
-public class DataDispatcherServlet extends HttpServlet {
+public class ControlParameterDispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DataDispatcherServlet() {
+	public ControlParameterDispatcherServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -56,17 +56,16 @@ public class DataDispatcherServlet extends HttpServlet {
 		
 		try {
 			Gson gson = new Gson();
-			JsonData data = gson.fromJson(sb.toString(), JsonData.class);
-			Speed speed = data.buildSpeedObject();
-			Point3D point = data.buildPoint3DObject();
+			ControlParameter data = gson.fromJson(sb.toString(), ControlParameter.class);
 
-			int controlFlag = data.getControlFlag();
-			if(controlFlag == 5)
-				controlFlag = 4;
-				
+			int controlFlag = 7;
+			
 			byte[] buf = new byte[SendData.MAX_BUFFER_SIZE];
+				
+			
 			SendData.getInstance().initCOM("com4");
-			int bufSize = SendData.getInstance().formatePointData(point, speed, controlFlag, buf);
+			int bufSize = SendData.getInstance().formateIniWeldParaData(data, controlFlag, buf);
+
 			SendData.getInstance().sendData(buf,bufSize);
 		} catch (Exception e) {
 			e.printStackTrace();

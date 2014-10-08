@@ -34,7 +34,12 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 }
 
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
-(JNIEnv *env, jclass cls, jobject obj, jbyteArray array){
+(JNIEnv *env, jclass cls, jobject obj, jbyteArray array, jint bufSize){
+	//check buffer size
+	if (bufSize > 128){
+		return false;
+	}
+
 	//get fieldId
 	jclass ptrCls = env->GetObjectClass(obj);
 	jfieldID pHComFid = env->GetFieldID(ptrCls,"pHCom","J");
@@ -47,15 +52,15 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
 	//convert long to ptr value
 	HANDLE* g_hCom = (HANDLE*) g_hComValue;
 	OVERLAPPED* g_wrOverland = (OVERLAPPED*) g_wrOverlandValue;
-	jbyte buffer[32];
-	env->GetByteArrayRegion(array,0,32,buffer);
-
-	char buf[32];
-	for(int i=0;i<32;i++){
+	jbyte buffer[128];
+	env->GetByteArrayRegion(array,0,bufSize,buffer);
+	
+	char buf[128];
+	for (int i = 0; i<bufSize; i++){
 		buf[i] = buffer[i];
 	}
 	//send data
-	bool result = SendData(*g_hCom,*g_wrOverland,buf,sizeof(buf));
+	bool result = SendData(*g_hCom,*g_wrOverland,buf,bufSize);
 
 	return result;
 }
@@ -84,16 +89,32 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
 	return true;
 }
 
-JNIEXPORT void JNICALL Java_com_weakie_share_jni_SendData_formatData
+JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatPointData
 (JNIEnv * env, jclass cls, jint x, jint y, jint z, jint sx, jint sy, jint sz, jint flag, jbyteArray buffer){
 	Speed speed(sx,sy,sz);
 	Point3i point(x,y,z);
 
-	char buf[32];
-	FormateData(point,speed,buf,flag);
-	jbyte b[32];
-	for(int i=0;i<32;i++){
+	char buf[128];
+	int bufLength = FormatePointData(point,speed,buf,flag);
+	jbyte b[128];
+	for(int i=0;i<128;i++){
 		b[i] = buf[i];
 	}
-	env->SetByteArrayRegion(buffer,0,32,b);
+	env->SetByteArrayRegion(buffer,0,128,b);
+	return bufLength;
+}
+
+
+JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatIniWeldParaData
+(JNIEnv * env, jclass cls, jint h0, jint h1, jint h2, jint h3, jint h4, jint h5, jint v0, jint v1, jint v2, jint v3, jint v4, jint v5, jint i1, jint i2, jint i3, jint flag, jbyteArray buffer){
+	WeldPara wp(h0, h1, h2, h3, h4, h5, v0, v1, v2, v3, v4, v5, i1, i2, i3);
+
+	char buf[128];
+	int bufLength = FormateIniWeldPara(wp, buf, flag);
+	jbyte b[128];
+	for (int i = 0; i<128; i++){
+		b[i] = buf[i];
+	}
+	env->SetByteArrayRegion(buffer, 0, 128, b);
+	return bufLength;
 }

@@ -3,8 +3,7 @@ package com.weakie.server.bean;
 import com.weakie.share.bean.Point3D;
 import com.weakie.share.bean.Speed;
 
-public class JsonData {
-
+public class JsonSaveData {
 	private int x;
 	private int y;
 	private int z;
@@ -13,15 +12,17 @@ public class JsonData {
 	private int sy;
 	private int sz;
 	
-	private int controlFlag;
+	private float slpTime;
+	
+	private String des;
 	
 	private char endFlag;
 	private char startFlag;
 	
-	public JsonData() {
+	public JsonSaveData() {
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Point3D buildPoint3DObject(){
 		return new Point3D(x,y,z);
 	}
@@ -29,6 +30,7 @@ public class JsonData {
 	public Speed buildSpeedObject(){
 		return new Speed(sx,sy,sz);
 	}
+	
 	
 	public char getStartFlag(){
 		return this.startFlag;
@@ -38,12 +40,19 @@ public class JsonData {
 		return this.endFlag;
 	}
 	
-	public int getControlFlag(){
-		return this.controlFlag;
+	public void setSlpTime(float temp){
+		this.slpTime = temp;
 	}
 	
-	public void setFlag(int controlFlag)
-	{
-		this.controlFlag = controlFlag;
+	public float getSlpTime(){
+		return slpTime;
+	}
+	
+	public void setDes(String des){
+		this.des = des;
+	}
+	
+	public String getDes(){
+		return des;
 	}
 }

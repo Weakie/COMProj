@@ -21,7 +21,7 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
  * Signature: (Lcom/weakie/share/jni/SendData/PtrData;[B)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
-  (JNIEnv *, jclass, jobject, jbyteArray);
+  (JNIEnv *, jclass, jobject, jbyteArray, jint);
 
 /*
  * Class:     com_weakie_share_jni_SendData
@@ -36,8 +36,11 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
  * Method:    formatData
  * Signature: (IIIIII[B)V
  */
-JNIEXPORT void JNICALL Java_com_weakie_share_jni_SendData_formatData
+JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatPointData
   (JNIEnv *, jclass, jint, jint, jint, jint, jint, jint, jint, jbyteArray);
+
+JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatIniWeldParaData
+(JNIEnv *, jclass, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jint, jbyteArray);
 
 #ifdef __cplusplus
 }

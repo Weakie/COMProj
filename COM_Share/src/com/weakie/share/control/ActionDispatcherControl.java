@@ -63,7 +63,7 @@ public class ActionDispatcherControl {
 		public void run() {
 			//Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			try {
-				byte[] buf = new byte[32];
+				byte[] buf = new byte[SendData.MAX_BUFFER_SIZE];
 				this.control.init(this.commandList.size());
 				
 				end: for (ActionCommand ac : commandList) {
@@ -78,8 +78,8 @@ public class ActionDispatcherControl {
 						}
 						
 						//Format and Send data
-						SendData.getInstance().formateData(b.getPoint(basePoint), b.getSpeed(), buf);
-						SendData.getInstance().sendData(buf);
+						int bufSize = SendData.getInstance().formatePointData(b.getPoint(basePoint), b.getSpeed(), buf);
+						SendData.getInstance().sendData(buf,bufSize);
 						
 						//control time to sleep, avoid the influence of calculate time 
 						long sleeptime = b.getTime()+(timeFlag-System.currentTimeMillis());

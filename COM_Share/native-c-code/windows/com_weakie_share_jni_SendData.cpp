@@ -52,18 +52,23 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
 	//convert long to ptr value
 	HANDLE* g_hCom = (HANDLE*) g_hComValue;
 	OVERLAPPED* g_wrOverland = (OVERLAPPED*) g_wrOverlandValue;
+
+	//get array data of buf
 	jbyte buffer[128];
 	env->GetByteArrayRegion(array,0,bufSize,buffer);
 	
-	char buf[128];
-	for (int i = 0; i<bufSize; i++){
-		buf[i] = buffer[i];
-	}
+	//convert jbyte[] to char[] type
+	//char buf[128];
+	//for (int i = 0; i<bufSize; i++){
+		//buf[i] = buffer[i];
+	//}
+
 	//send data
-	bool result = SendData(*g_hCom,*g_wrOverland,buf,bufSize);
+	bool result = SendData(*g_hCom,*g_wrOverland,(char*)buffer,bufSize);
 
 	return result;
 }
+
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
 (JNIEnv *env, jclass cls, jobject obj){
 	//get fieldId
@@ -91,16 +96,24 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_destroy
 
 JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatPointData
 (JNIEnv * env, jclass cls, jint x, jint y, jint z, jint sx, jint sy, jint sz, jint flag, jbyteArray buffer){
+	
+	//constract object
 	Speed speed(sx,sy,sz);
 	Point3i point(x,y,z);
 
+	//format the data by parameters and store in a char[]
 	char buf[128];
 	int bufLength = FormatePointData(point,speed,buf,flag);
-	jbyte b[128];
-	for(int i=0;i<128;i++){
-		b[i] = buf[i];
-	}
-	env->SetByteArrayRegion(buffer,0,128,b);
+
+	//convert the char[] to jbyte[] buffer
+	//jbyte b[128];
+	//for (int i = 0; i<bufLength; i++){
+		//b[i] = buf[i];
+	//}
+
+	//set the data to the preallocted buf
+	env->SetByteArrayRegion(buffer,0,bufLength,(jbyte*)buf);
+
 	return bufLength;
 }
 
@@ -109,12 +122,18 @@ JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatIniWeldParaData
 (JNIEnv * env, jclass cls, jint h0, jint h1, jint h2, jint h3, jint h4, jint h5, jint v0, jint v1, jint v2, jint v3, jint v4, jint v5, jint i1, jint i2, jint i3, jint flag, jbyteArray buffer){
 	WeldPara wp(h0, h1, h2, h3, h4, h5, v0, v1, v2, v3, v4, v5, i1, i2, i3);
 
+	//format the data by parameters and store in a char[]
 	char buf[128];
 	int bufLength = FormateIniWeldPara(wp, buf, flag);
-	jbyte b[128];
-	for (int i = 0; i<128; i++){
-		b[i] = buf[i];
-	}
-	env->SetByteArrayRegion(buffer, 0, 128, b);
+
+	//convert the char[] to jbyte[] buffer
+	//jbyte b[128];
+	//for (int i = 0; i<bufLength; i++){
+		//b[i] = buf[i];
+	//}
+	
+	//set the data to the preallocted buf
+	env->SetByteArrayRegion(buffer, 0, bufLength, (jbyte*)buf);
+
 	return bufLength;
 }

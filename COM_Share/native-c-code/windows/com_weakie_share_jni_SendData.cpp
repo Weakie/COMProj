@@ -1,6 +1,8 @@
 #include "com_weakie_share_jni_SendData.h"
 #include "SendData.h"
 
+const int MAX_BUFFER_SIZE = 128;
+
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 (JNIEnv *env, jclass cls, jobject obj,jstring port){
 	//get fieldId
@@ -36,7 +38,8 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_initCOM
 JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
 (JNIEnv *env, jclass cls, jobject obj, jbyteArray array, jint bufSize){
 	//check buffer size
-	if (bufSize > 128){
+	int length = env->GetArrayLength(array);
+	if (bufSize > MAX_BUFFER_SIZE || bufSize > length){
 		return false;
 	}
 
@@ -54,11 +57,11 @@ JNIEXPORT jboolean JNICALL Java_com_weakie_share_jni_SendData_sendData
 	OVERLAPPED* g_wrOverland = (OVERLAPPED*) g_wrOverlandValue;
 
 	//get array data of buf
-	jbyte buffer[128];
+	jbyte buffer[MAX_BUFFER_SIZE];
 	env->GetByteArrayRegion(array,0,bufSize,buffer);
 	
 	//convert jbyte[] to char[] type
-	//char buf[128];
+	//char buf[MAX_BUFFER_SIZE];
 	//for (int i = 0; i<bufSize; i++){
 		//buf[i] = buffer[i];
 	//}
@@ -102,11 +105,17 @@ JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatPointData
 	Point3i point(x,y,z);
 
 	//format the data by parameters and store in a char[]
-	char buf[128];
+	char buf[MAX_BUFFER_SIZE];
 	int bufLength = FormatePointData(point,speed,buf,flag);
+	
+	//check buffer array length
+	int length = env->GetArrayLength(buffer);
+	if(length < bufLength){
+		return -1;
+	}
 
 	//convert the char[] to jbyte[] buffer
-	//jbyte b[128];
+	//jbyte b[MAX_BUFFER_SIZE];
 	//for (int i = 0; i<bufLength; i++){
 		//b[i] = buf[i];
 	//}
@@ -120,14 +129,22 @@ JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatPointData
 
 JNIEXPORT jint JNICALL Java_com_weakie_share_jni_SendData_formatIniWeldParaData
 (JNIEnv * env, jclass cls, jint h0, jint h1, jint h2, jint h3, jint h4, jint h5, jint v0, jint v1, jint v2, jint v3, jint v4, jint v5, jint i1, jint i2, jint i3, jint flag, jbyteArray buffer){
+	
+	//constract object
 	WeldPara wp(h0, h1, h2, h3, h4, h5, v0, v1, v2, v3, v4, v5, i1, i2, i3);
 
 	//format the data by parameters and store in a char[]
-	char buf[128];
+	char buf[MAX_BUFFER_SIZE];
 	int bufLength = FormateIniWeldPara(wp, buf, flag);
 
+	//check buffer array length
+	int length = env->GetArrayLength(buffer);
+	if(length < bufLength){
+		return -1;
+	}
+
 	//convert the char[] to jbyte[] buffer
-	//jbyte b[128];
+	//jbyte b[MAX_BUFFER_SIZE];
 	//for (int i = 0; i<bufLength; i++){
 		//b[i] = buf[i];
 	//}

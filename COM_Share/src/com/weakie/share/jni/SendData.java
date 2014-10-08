@@ -56,21 +56,21 @@ public class SendData {
 		
 	}
 	
-	public int formatePointData(Point3D p,Speed s,byte[] buf){
+	public int formatPointData(Point3D p,Speed s,byte[] buf){
 		if(buf==null || buf.length<MAX_BUFFER_SIZE){
 			LogUtil.info("please init buf first!");
 		}
 		return SendData.formatPointData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), ABSOLUTE_POSITION, buf);
 	}
 	
-	public int formatePointData(Point3D p,Speed s,int flag,byte[] buf){
+	public int formatPointData(Point3D p,Speed s,int flag,byte[] buf){
 		if(buf==null || buf.length<MAX_BUFFER_SIZE){
 			LogUtil.info("please init buf first!");
 		}
 		return SendData.formatPointData(p.getX(), p.getY(), p.getZ(), s.getX(), s.getY(), s.getZ(), flag, buf);
 	}
 	
-	public int formateIniWeldParaData(ControlParameter cp, int flag, byte[] buf){
+	public int formatIniWeldParaData(ControlParameter cp, int flag, byte[] buf){
 		if(buf==null || buf.length<MAX_BUFFER_SIZE){
 			LogUtil.info("please init buf first!");
 		}

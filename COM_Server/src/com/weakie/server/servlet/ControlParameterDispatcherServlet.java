@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.weakie.share.bean.ControlParameter;
-import com.weakie.share.bean.Point3D;
-import com.weakie.share.bean.Speed;
 import com.weakie.share.jni.SendData;
 
 /**
@@ -64,7 +62,7 @@ public class ControlParameterDispatcherServlet extends HttpServlet {
 				
 			
 			SendData.getInstance().initCOM("com4");
-			int bufSize = SendData.getInstance().formateIniWeldParaData(data, controlFlag, buf);
+			int bufSize = SendData.getInstance().formatIniWeldParaData(data, controlFlag, buf);
 
 			SendData.getInstance().sendData(buf,bufSize);
 		} catch (Exception e) {

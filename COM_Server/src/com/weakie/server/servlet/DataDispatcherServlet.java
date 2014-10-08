@@ -66,7 +66,7 @@ public class DataDispatcherServlet extends HttpServlet {
 				
 			byte[] buf = new byte[SendData.MAX_BUFFER_SIZE];
 			SendData.getInstance().initCOM("com4");
-			int bufSize = SendData.getInstance().formatePointData(point, speed, controlFlag, buf);
+			int bufSize = SendData.getInstance().formatPointData(point, speed, controlFlag, buf);
 			SendData.getInstance().sendData(buf,bufSize);
 		} catch (Exception e) {
 			e.printStackTrace();

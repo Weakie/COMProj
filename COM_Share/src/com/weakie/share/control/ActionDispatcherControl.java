@@ -78,7 +78,7 @@ public class ActionDispatcherControl {
 						}
 						
 						//Format and Send data
-						int bufSize = SendData.getInstance().formatePointData(b.getPoint(basePoint), b.getSpeed(), buf);
+						int bufSize = SendData.getInstance().formatPointData(b.getPoint(basePoint), b.getSpeed(), buf);
 						SendData.getInstance().sendData(buf,bufSize);
 						
 						//control time to sleep, avoid the influence of calculate time 

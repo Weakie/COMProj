@@ -22,6 +22,13 @@ import com.weakie.share.bean.Speed;
 
 public class DataSaveServlet extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1732785718936820654L;
+
+
+
 	public DataSaveServlet(){
 		super();
 	}

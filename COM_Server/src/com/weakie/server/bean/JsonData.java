@@ -13,6 +13,8 @@ public class JsonData {
 	private int sy;
 	private int sz;
 	
+	private int controlFlag;
+	
 	private char endFlag;
 	private char startFlag;
 	
@@ -34,5 +36,14 @@ public class JsonData {
 	
 	public char getEndFlag(){
 		return this.endFlag;
+	}
+	
+	public int getControlFlag(){
+		return this.controlFlag;
+	}
+	
+	public void setFlag(int controlFlag)
+	{
+		this.controlFlag = controlFlag;
 	}
 }

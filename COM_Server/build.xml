@@ -13,7 +13,7 @@
 	<property name="web-xml-file" value="WebContent/WEB-INF/web.xml" />
 	<property name="war-file-name" value="COMProj.war" />
 
-	<property name="tomcat.dir" value="D:\\Program Files (x86)\\tomcat 6\\apache-tomcat-6.0.37"/>
+	<property name="tomcat.dir" value="C:\Users\Sun\Desktop\apache-tomcat-6.0.39"/>
 	<!-- other info -->
 	<property name="builder" value="Weakie" />
 	<tstamp prefix="build-info">

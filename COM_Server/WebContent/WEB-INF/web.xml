@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>COMProj</display-name>
+  <display-name>COM_Server</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -19,6 +19,7 @@
     <servlet-name>DataDispatcherServlet</servlet-name>
     <url-pattern>/DataDispatcherServlet</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>DataSaveServlet</display-name>
@@ -28,5 +29,16 @@
   <servlet-mapping>
     <servlet-name>DataSaveServlet</servlet-name>
     <url-pattern>/DataSaveServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>ControlParameterDispatcherServlet</display-name>
+    <servlet-name>ControlParameterDispatcherServlet</servlet-name>
+    <servlet-class>com.weakie.server.servlet.ControlParameterDispatcherServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ControlParameterDispatcherServlet</servlet-name>
+    <url-pattern>/ControlParameterDispatcherServlet</url-pattern>
   </servlet-mapping>
 </web-app>

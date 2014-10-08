@@ -666,7 +666,7 @@ public class MainView {
 	}
 	
 	private void moveToPoint(){
-		byte[] buf = new byte[32];
+		byte[] buf = new byte[SendData.MAX_BUFFER_SIZE];
 		try{
 			int x = this.spinner_x.getSelection();
 			int y = this.spinner_y.getSelection();
@@ -675,8 +675,8 @@ public class MainView {
 			int sy = this.spinner_sy.getSelection();
 			int sz = this.spinner_sz.getSelection();
 			LogUtil.info("Move to Point:("+x+","+y+","+z+"), Speed:("+sx+","+sy+","+sz+")");
-			SendData.getInstance().formateData(new Point3D(x, y, z), new Speed(sx, sy, sz), buf);
-			SendData.getInstance().sendData(buf);
+			int bufSize = SendData.getInstance().formatePointData(new Point3D(x, y, z), new Speed(sx, sy, sz), buf);
+			SendData.getInstance().sendData(buf,bufSize);
 			LogUtil.info(this.generateFormatedData(buf));
 		}catch(Exception e2){
 			LogUtil.error(e2);
@@ -684,11 +684,11 @@ public class MainView {
 	}
 	
 	private void moveToOriginPoint(){
-		byte[] buf = new byte[32];
+		byte[] buf = new byte[SendData.MAX_BUFFER_SIZE];
 		try{
 			LogUtil.info("Move to Origin Point:(0,0,0), Speed:(20000,20000,20000)");
-			SendData.getInstance().formateData(new Point3D(0, 0, 0), new Speed(20000, 20000, 20000), buf);
-			SendData.getInstance().sendData(buf);
+			int bufSize = SendData.getInstance().formatePointData(new Point3D(0, 0, 0), new Speed(20000, 20000, 20000), buf);
+			SendData.getInstance().sendData(buf,bufSize);
 			LogUtil.info(this.generateFormatedData(buf));
 		}catch(Exception e2){
 			LogUtil.error(e2);
